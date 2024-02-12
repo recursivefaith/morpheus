@@ -1,9 +1,11 @@
 body {
   /**
    * Inspired from: https://vscodethemes.com/e/theedgesofben.punk-runner/punk-runner?language=javascript
+   * @see https://docs.obsidian.md/Reference/CSS+variables/CSS+variables
    */
 
-  /* Custom */
+
+  /* Theme colors */
   ---color-1: #050f0e;
   ---color-1-light1: #062621;
   ---color-1-light2: #07443b;
@@ -19,83 +21,12 @@ body {
   ---color-text-1: #ffffffaa;
   ---color-text-1-muted: #ffffff66;
   ---color-text-1-faint: #ffffff33;
+  ---color-text-1-bright: #fff;
   
-  
-  
-  /* Old */
-  ---accentColor: var(---color-2);
-  ---accentColorLessTransparent: #dd2a629A;
-  ---accentColorTransparent: #dd2a625A;
-  ---accentColorMoreTransparent: #dd2a622A;
-  ---accentContrastColor: #19181e;
-  ---infoForeground: #bd7e99;
-  ---stopColor: #f3c61f;
-  ---testScopeColor: #1c2f24;
-  ---popupMask: #928d8d05;
-  ---codeBlock: #351929;
-  ---textEditorBackground: #1e1928;
-  ---comments: #bf88a4;
-  ---errorColor: #ff2525;
-  ---unusedColor: #5c5157;
-  ---constantColor: #F9FC88;
-  ---classNameColor: #67F5C4;
-  ---htmlTagColor: #AC99FC;
-  ---stringColor: #FFB4F8;
-  ---keyColor: #8C92FC;
-  ---keywordColor: #de4371;
-  ---iconAccent: #de4371;
-  ---iconAccentCompliment: #FFB4F8;
-  ---iconBaseBlend: #7e74ff;
-  ---iconSecondaryBlend: #a1a9ff;
-  ---iconBlendContrast: #F9FC88;
-  ---iconBlendCompliment: #F9FC88;
-  ---iconDiversification: #67F5C4;
-  ---dokiLogoAccent: #9e83ff;
-  ---dokiLogoAccentContrast: #503e92;
-  ---diff-modified: #1B2B4B;
-  ---diff-inserted: #0F2F1D;
-  ---diff-conflict: #441919;
-  ---diff-deleted: #292231;
-  ---lightEditorColor: #261f33;
-  ---breakpointColor: #3f3931;
-  ---breakpointActiveColor: #254428;
-  ---fileBlue: #1c2e4f;
-  ---fileGray: #2c2934;
-  ---fileRose: #3c1f37;
-  ---fileOrange: #432c24;
-  ---fileViolet: #2a2146;
-  ---fileYellow: #373327;
-  ---fileRed: #371a25;
-  ---filePurple: #291a3f;
-
-
-
-  /**
-   * Obsidian Theme
-   * @see https://docs.obsidian.md/Reference/CSS+variables/CSS+variables
-   */
-  /* hsl(---color-3) */
-  --accent-h: 341.23;
-  --accent-s: 72.47%;
-  --accent-l: 51.57%;
-
-  /* Extended colors */
-  --color-red: green;
-  --color-orange: green;
-  --color-yellow: green;
-  --color-green: green;
-  --color-cyan: green;
-  --color-blue: green;
-  --color-purple: green;
-  --color-pink: green;
-  --color-red-rgb: green;
-  --color-orange-rgb: green;
-  --color-yellow-rgb: green;
-  --color-green-rgb: green;
-  --color-cyan-rgb: green;
-  --color-blue-rgb: green;
-  --color-purple-rgb: green;
-  --color-pink-rgb: green;
+  /* hsl(---color-2) */
+  --accent-h: 348.05;
+  --accent-s: 100%;
+  --accent-l: 30%;
 
   /* Surface colors */
   --background-primary: var(---color-1);
@@ -282,8 +213,11 @@ body {
 .cm-formatting.cm-header {
   color: var(---color-3);
 }
-.inline-title {
+.inline-title,
+h1, h2, h3, h4, h5, h6,
+.HyperMD-header {
   font-size: 2.5rem;
+  color: var(---color-text-1-bright);
 }
 
 /* Lists */
