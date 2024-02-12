@@ -208,10 +208,12 @@ body.theme-light {
 .cm-formatting.cm-header {
   color: var(---color-3);
 }
-.inline-title,
+.inline-title {
+  font-size: 2.5rem;
+  color: var(---color-text-1-bright);
+}
 h1, h2, h3, h4, h5, h6,
 .HyperMD-header {
-  font-size: 2.5rem;
   color: var(---color-text-1-bright);
 }
 
