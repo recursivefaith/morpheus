@@ -1,4 +1,6 @@
-body {
+body,
+body.theme-dark
+body.theme-light {
   /**
    * Inspired from: https://vscodethemes.com/e/theedgesofben.punk-runner/punk-runner?language=javascript
    * @see https://docs.obsidian.md/Reference/CSS+variables/CSS+variables
@@ -10,13 +12,24 @@ body {
   ---color-1-light1: #062621;
   ---color-1-light2: #07443b;
   ---color-1-light3: #3d996b;
+  ---color-1-light3-rgb: 61 153 107;
   ---color-1-bright: #12ffbc;
+  ---color-1-bright-rgb: 103 245 196;
   
   ---color-2: #ff1342;
   ---color-2-light: #e66c84;
+  ---color-2-dark: #52101e;
   
   ---color-3: #eb9b27;
+  ---color-3-dark: #896126;
+  ---color-3-dark-rgb: 137 97 38;
+
   ---color-4: #519aba;
+  ---color-4-bright-rgb: 36 188 255;
+  ---color-4-dark1: #3f6d81;
+  ---color-4-dark2: #243d48;
+
+  ---color-5: #a85aa5;
   
   ---color-text-1: #ffffffaa;
   ---color-text-1-muted: #ffffff66;
@@ -126,26 +139,6 @@ body {
   --blockquote-background-color: var(---color-1-light1);
   --blockquote-border-color: var(---color-2);
 
-  /* Callouts */
-  /* These have to be rgba */
-  /* 
-  --callout-default: red;
-  --callout-bug: red;
-  --callout-error: red;
-  --callout-example: red;
-  --callout-fail: red;
-  --callout-important: red;
-  --callout-info: red;
-  --callout-question: red;
-  --callout-success: red;
-  --callout-summary: red;
-  --callout-tip: red;
-  --callout-todo: red;
-  --callout-warning: red;
-  --callout-quote: red;
- */
-  
-
 
 
   /* Window */
@@ -181,7 +174,9 @@ body {
   --list-marker-color: var(---color-2);
   --hr-color: var(---color-1-light1);
 }
-
+::selection {
+  background: var(---color-2-dark) !important;
+}
 
 /**
  * Custom overrides
@@ -227,13 +222,15 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* Tasks */
-.HyperMD-task-line.cm-active .task-list-item-checkbox,
-.HyperMD-task-line.cm-active .task-list-item-checkbox:checked {
+.HyperMD-task-line.cm-active .task-list-item-checkbox {
   border-color: var(---color-3);
 }
 .HyperMD-task-line .task-list-item-checkbox:checked {
   background-color: var(---color-1-light2);
   border-color: var(---color-1-light2);
+}
+.HyperMD-task-line.cm-active .task-list-item-checkbox:checked {
+  border-color: var(---color-1-bright)
 }
 
 /* Quotes */
@@ -262,15 +259,58 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* Callouts */
-.callout[data-callout^="tip"] {
-  --callout-color: 103 245 196;
-  background: rgba(103, 245, 196, .2) !important;
+.callout {
+  --callout-color: var(---color-1-light3-rgb);
+  background: var(---color-1-light1);
 }
+
+.callout[data-callout^="abstract"] {
+  --callout-color: 255 255 255;
+  background: var(---color-4-dark1);
+}
+
+.callout[data-callout^="success"],
+.callout[data-callout^="info"] {
+  --callout-color: 255 255 255;
+  background: var(---color-1-light2);
+}
+
+.callout[data-callout^="todo"],
+.callout[data-callout^="question"],
+.callout[data-callout^="example"],
+.callout[data-callout^="quote"] {
+  --callout-color: var(---color-4-bright-rgb);
+  --callout-color: 255 255 255;
+  background: var(---color-4-dark2);
+}
+
+.callout[data-callout^="tip"],
+.callout[data-callout^="warning"] {
+  --callout-color: 255 255 255;
+  background: var(---color-3-dark);
+}
+
+.callout[data-callout^="warning"] {
+  --callout-color: 255 255 255;
+  background: var(---color-3-dark);
+}
+
+.callout[data-callout^="failure"] {
+  --callout-color: 255 255 255;
+  background: var(---color-2-dark);
+}
+
+.callout[data-callout^="bug"],
+.callout[data-callout^="danger"] {
+  --callout-color: 255 255 255;
+  background: var(---color-2-dark);
+}
+
 
 /* Code */
 .cm-s-obsidian span.cm-inline-code,
 .markdown-rendered code {
-  color: var(---classNameColor);
+  color: var(---color-1-bright);
 }
 
 
@@ -282,3 +322,7 @@ h1, h2, h3, h4, h5, h6,
   color: var(---color-1) !important;
 }
 
+/* Forms */
+.search-result-file-matched-text {
+  background: var(---color-2-dark);
+}
