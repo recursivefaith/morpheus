@@ -22,12 +22,6 @@ body {
   
   
   
-  /* Todo */
-  ---selectionBackground: var(---color-2);
-  ---selectionBackgroundTransparent: #ff1342aa;
-  ---borderColor: var(---selectionBackgroundTransparent);
-  
-  
   /* Old */
   ---accentColor: var(---color-2);
   ---accentColorLessTransparent: #dd2a629A;
@@ -140,6 +134,7 @@ body {
   --checkbox-marker-color: var(---color-1);
   --checkbox-border-color-hover: var(---color-2-light);
   --checklist-done-color: var(---color-text-1-muted);
+  --checkbox-border-color: var(---color-2);
 
   /* Radius */
   --radius-s: 0;
@@ -243,18 +238,17 @@ body {
 
   /* Graph */
   --graph-text: var(---text-normal);
-  --graph-line: var(---color-1-light3);
-  --graph-node: var(---color-2);
-  --graph-node-focused: var(---text-normal);
-  --graph-node-unresolved: var(---dokiLogoAccent);
-  --graph-node-tag: var(---color-3);
-  --graph-node-attachment: var(---stopColor);
+  --graph-line: var(---color-1-light2);
+  --graph-node: var(---color-1-light3);
+  --graph-node-focused: var(---color-2);
+  --graph-node-unresolved: var(---color-text-1);
+  --graph-node-tag: var(---color-4);
+  --graph-node-attachment: var(---color-3);
 
 
   /* Markdown */
   --list-marker-color: var(---color-2);
-  --checkbox-border-color: var(---color-2);
-  --hr-color: var(---iconDiversification);
+  --hr-color: var(---color-1-light1);
 }
 
 
@@ -265,7 +259,7 @@ body {
   caret-color: var(---color-3) !important;
 }
 .cm-s-obsidian span.cm-strong, strong {
-  color: var(---iconDiversification);
+  color: var(---color-1-light3);
 }
 
 /* Links */
@@ -299,11 +293,13 @@ body {
 }
 
 /* Tasks */
-.HyperMD-task-line.cm-active .task-list-item-checkbox {
+.HyperMD-task-line.cm-active .task-list-item-checkbox,
+.HyperMD-task-line.cm-active .task-list-item-checkbox:checked {
   border-color: var(---color-3);
 }
-.HyperMD-task-line.cm-active .task-list-item-checkbox:checked {
-  background-color: var(---color-3)
+.HyperMD-task-line .task-list-item-checkbox:checked {
+  background-color: var(---color-1-light2);
+  border-color: var(---color-1-light2);
 }
 
 /* Quotes */
