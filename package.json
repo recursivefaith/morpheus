@@ -4,7 +4,7 @@
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
 	"scripts": {
-    "start": "node esbuild.config.mjs",
+		"start": "node esbuild.config.mjs",
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
@@ -21,5 +21,12 @@
 		"obsidian": "latest",
 		"tslib": "2.4.0",
 		"typescript": "4.7.4"
+	},
+	"dependencies": {
+		"@google/generative-ai": "^0.2.0",
+		"markdown-it": "^14.0.0",
+		"markdown-it-attrs": "^4.1.6",
+		"shell-quote": "^1.8.1",
+		"splitting": "^1.0.6"
 	}
 }

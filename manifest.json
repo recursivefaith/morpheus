@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
+	"id": "obsidian-helenite",
+	"name": "Obsidian Helenite",
+	"version": "0.15.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "A free AI copilot, web clipper, and vault visualizer for Obsidian Notes with accompanying theme",
+	"author": "tollezac",
+	"authorUrl": "https://tollezac.github.com",
+	"fundingUrl": "https://buymeacoffee.com/tollezac",
 	"isDesktopOnly": false
 }
