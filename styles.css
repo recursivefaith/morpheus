@@ -69,7 +69,8 @@ body.theme-light {
 
   /* Typography */
   --bold-weight: 700;
-
+  --nav-item-color-active: var(---color-1-bright);
+  
   /* Buttons */
   --button-radius: 2px;
 
@@ -185,7 +186,7 @@ body.theme-light {
   caret-color: var(---color-3) !important;
 }
 .cm-s-obsidian span.cm-strong, strong {
-  color: var(---color-1-light3);
+  color: var(---color-text-1-bright);
 }
 
 /* Links */
@@ -202,6 +203,24 @@ body.theme-light {
  /* Header */
 .workspace-tab-header.is-active {
   border-bottom: 2px solid var(---color-2);
+}
+
+/* Sidebar */
+.mod-root > .nav-folder-title .nav-folder-title-content {
+  color: var(---color-3) !important;
+}
+.nav-file-title {
+  color: var(---color-1-light3) !important;
+}
+.nav-folder-title {
+  color: var(---color-4) !important;
+}
+.nav-file-title.is-active {
+  color: var(---color-1-bright) !important;
+}
+.nav-file-tag {
+  background: var(---color-3-dark) !important;
+  color: var(---color-1) !important;
 }
 
 /* Headings */
