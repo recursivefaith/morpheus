@@ -1,34 +1,37 @@
 body {
   /**
-   * Inspired from: https://vscodethemes.com/e/theedgesofben.punk-runner/punk-runner?language=javascript
+   * Original Doki Theme
+   * @see Dark - Rikka: https://github.com/doki-theme/doki-master-theme/blob/4467240b45837ff473903d572790112fc2caa8ca/definitions/chuunibyou/rikka/dark/rikka.dark.master.definition.json#L4
    */
-
-  /* Custom */
-  ---color-1: #050f0e;
-  ---color-1-light1: #062621;
-  ---color-1-light2: #07443b;
-  ---color-1-light3: #3d996b;
-  ---color-1-bright: #12ffbc;
-  ---color-2: #ff1342;
-  ---color-2-light: #e66c84;
-
-  ---color-text-1: #ffffffaa;
-  ---color-text-1-muted: #ffffff66;
-  ---color-text-1-faint: #ffffff33;
+  ---overrides-startColor: #E356A7;
+  ---overrides-accentColor: #65CDFA;
   
-  
-  /* Todo */
-  ---color-3: #12ffbc;
-  ---selectionBackground: var(---color-2);
-  ---selectionBackgroundTransparent: #ff1342aa;
-  ---borderColor: var(---selectionBackgroundTransparent);
-  
-  
-  /* Old */
-  ---accentColor: var(---color-2);
-  ---accentColorLessTransparent: #dd2a629A;
+  ---caretRow: #2b233a;
+  ---lineNumberColor: #8e6e7b;
+  ---baseIconColor: #8e7480;
+  ---contrastColor: #46192c;
+  ---nonProjectFileScopeColor: #2f2c23;
+  ---secondaryBackground: #16121e;
+  ---selectionForeground: #fbfbfb;
+  ---headerColor: #1d1926;
+  ---baseBackground: #231e2d;
+  ---borderColor: #2f283c;
+  ---buttonColor: #492f41;
+  ---selectionInactive: #3d182a;
+  ---identifierHighlight: #462F49;
+  ---selectionBackground: #761d3a;
+  ---selectionBackgroundTransparent: #761d3aAA;
+  ---searchBackground: #277FA5;
+  ---searchForeground: #fbfbfb;
+  ---buttonFont: #a7a7a7;
+  ---foregroundColor: #bbbbbb;
+  ---startColor: #53464b;
+  ---highlightColor: #46192c;
+  ---disabledColor: #745c65;
   ---accentColorTransparent: #dd2a625A;
+  ---accentColorLessTransparent: #dd2a629A;
   ---accentColorMoreTransparent: #dd2a622A;
+  ---accentColor: #dd2a62;
   ---accentContrastColor: #19181e;
   ---infoForeground: #bd7e99;
   ---stopColor: #f3c61f;
@@ -36,6 +39,7 @@ body {
   ---popupMask: #928d8d05;
   ---codeBlock: #351929;
   ---textEditorBackground: #1e1928;
+  ---foldedTextBackground: #2b2538;
   ---comments: #bf88a4;
   ---errorColor: #ff2525;
   ---unusedColor: #5c5157;
@@ -76,7 +80,7 @@ body {
    * Obsidian Theme
    * @see https://docs.obsidian.md/Reference/CSS+variables/CSS+variables
    */
-  /* hsl(---color-3) */
+  /* hsl(---overrides-accentColor) */
   --accent-h: 341.23;
   --accent-s: 72.47%;
   --accent-l: 51.57%;
@@ -100,30 +104,47 @@ body {
   --color-pink-rgb: green;
 
   /* Surface colors */
-  --background-primary: var(---color-1);
-  --background-primary-alt: var(---color-1-light1);
-  --background-secondary: var(---color-1);
-  --background-modifier-hover: var(---color-1-light1);
-  --background-modifier-border: var(---color-1-light1);
-  --background-modifier-border-hover: var(---color-1-light2);
-  --background-modifier-border-focus: var(---color-1-light3);
-  --background-modifier-message: var(---color-2);
-  --background-modifier-form-field: var(---color-1) !important;
+  --background-primary: var(---baseBackground);
+  --background-primary-alt: var(---foldedTextBackground);
+  --background-secondary: var(---secondaryBackground);
+  --background-modifier-hover: var(---accentColorMoreTransparent);
+  --background-modifier-active-hover: var(---selectionBackgroundTransparent);
+  --background-modifier-border: var(---borderColor);
+  --background-modifier-border-hover: var(---selectionBackgroundTransparent);
+  --background-modifier-border-focus: var(---selectionBackground);
+  --background-modifier-error-rgb: green;
+  --background-modifier-error: var(---stopColor);
+  --background-modifier-error-hover: green;
+  --background-modifier-success-rgb: green;
+  --background-modifier-success: green;
+  --background-modifier-message: var(---selectionBackground);
+  --background-modifier-form-field: var(---secondaryBackground) !important;
 
   /* Interactive colors */
-  --interactive-normal: var(---color-1-light1) !important;
-  --interactive-hover: var(---color-1-light2) !important;
-  --interactive-accent: var(---color-2) !important;
-  --interactive-accent-hover: var(---color-2-light) !important;
+  --interactive-normal: var(---accentColor) !important;
+  /* --interactive-hover: green !important;
+  --interactive-accent: green !important;
+  --interactive-accent-hover: green !important; */
 
   /* Text foreground colors */
-  --text-normal: var(---color-text-1);
-  --text-muted: var(---color-text-1-muted);
-  --text-faint: var(---color-text-1-faint);
+  --text-normal: #fff;
+  --text-muted: var(---foregroundColor);
+  --text-faint: var(---lineNumberColor);
+  --text-on-accent: var(---baseBackground);
+  --text-on-accent-inverted: green;
+  --text-success: green;
+  --text-warning: green;
+  --text-error: var(---stopColor);
+  --text-accent: green;
+  --text-accent-hover: var(-dk-d-overrides-accentColor);
+
+  /* Text background colors */
+  --text-selection: green;
+  --text-highlight-bg: var(---selectionBackground);
 
   /* Icons */
-  --icon-color: var(---color-1-light3);
-  --icon-color-hover: var(---color-1-bright);
+  --icon-color: var(---accentColor);
+  --icon-color-hover: var(---accentColor);
 
   /* Typography */
   --bold-weight: 700;
@@ -133,9 +154,8 @@ body {
 
   /* Checkboxes */
   --checkbox-radius: 2px;
-  --checkbox-marker-color: var(---color-1);
-  --checkbox-border-color-hover: var(---color-2-light);
-  --checklist-done-color: var(---color-text-1-muted);
+  --checkbox-marker-color: var(--background-primary);
+  --checkbox-border-color-hover: var(---iconAccent);
 
   /* Radius */
   --radius-s: 0;
@@ -144,15 +164,15 @@ body {
   --radius-xl: 8px;
 
   /* Dragging */
-  --drag-ghost-background: var(---color-1-light2);
+  --drag-ghost-background: var(---selectionBackgroundTransparent);
   --drag-ghost-text-color: #ffffff99;
 
   /* Indentation */
-  --indentation-guide-color: var(---color-1-light1);
-  --indentation-guide-color-active: var(---color-1-light3);
+  --indentation-guide-color: var(---identifierHighlight);
+  --indentation-guide-color-active: var(---accentColor);
 
   /* Modal */
-  --modal-border-color: var(---color-2);
+  --modal-border-color: var(---accentColor);
 
   /* Multi-select */
   /* @note: Couldn't find these */
@@ -163,10 +183,10 @@ body {
   --nav-item-color-active: var(---stopColor);
 
   /* Prompt */
-  --prompt-border-color: var(---color-2);
+  --prompt-border-color: var(---accentColor);
 
   /* Slider */
-  --slider-track-background: var(---color-2);
+  --slider-track-background: var(---accentColor);
 
   /* Tabs */
   --tab-background-active: var(---selectionBackgroundTransparent);
@@ -185,15 +205,15 @@ body {
   --link-decoration-color: var(---stopColor);
   --link-unresolved-color: var(---stopColor);
   --link-unresolved-opacity: 1;
-  --link-unresolved-decoration-color: var(---color-2);
+  --link-unresolved-decoration-color: var(---accentColor);
 
 
   /**
    * Editor
    */
   /* Blockquote */
-  --blockquote-background-color: var(---color-1-light1);
-  --blockquote-border-color: var(---color-2);
+  --blockquote-background-color: var(---foldedTextBackground);
+  --blockquote-border-color: var(---accentColor);
 
   /* Callouts */
   /* These have to be rgba */
@@ -225,30 +245,30 @@ body {
 
 
   /* Scrollbars */
-  --scrollbar-thumb-bg: var(---color-2Transparent);
-  --scrollbar-active-thumb-bg: var(---color-2LessTransparent);
+  --scrollbar-thumb-bg: var(---accentColorTransparent);
+  --scrollbar-active-thumb-bg: var(---accentColorLessTransparent);
 
 
 
   /* Status bar */
-  --status-bar-background: var(---color-2);
-  --status-bar-border-color: var(---color-2);
+  --status-bar-background: var(---accentColor);
+  --status-bar-border-color: var(---accentColor);
   --status-bar-text-color: var(--text-normal);
 
 
   /* Graph */
   --graph-text: var(---text-normal);
-  --graph-line: var(---color-1-light3);
-  --graph-node: var(---color-2);
+  --graph-line: var(---identifierHighlight);
+  --graph-node: var(---accentColor);
   --graph-node-focused: var(---text-normal);
   --graph-node-unresolved: var(---dokiLogoAccent);
-  --graph-node-tag: var(---color-3);
+  --graph-node-tag: var(---overrides-accentColor);
   --graph-node-attachment: var(---stopColor);
 
 
   /* Markdown */
-  --list-marker-color: var(---color-2);
-  --checkbox-border-color: var(---color-2);
+  --list-marker-color: var(---accentColor);
+  --checkbox-border-color: var(---accentColor);
   --hr-color: var(---iconDiversification);
 }
 
@@ -257,7 +277,7 @@ body {
  * Custom overrides
  */
 *, .cm-content {
-  caret-color: var(---color-3) !important;
+  caret-color: var(---overrides-accentColor) !important;
 }
 .cm-s-obsidian span.cm-strong, strong {
   color: var(---iconDiversification);
@@ -266,7 +286,7 @@ body {
 /* Links */
 .cm-underline,
 .markdown-rendered a {
-  text-decoration-color: var(---color-3);
+  text-decoration-color: var(---overrides-accentColor);
 }
 .cm-underline.external-link,
 .markdown-rendered a.external-link {
@@ -280,12 +300,12 @@ body {
 
  /* Header */
 .workspace-tab-header.is-active {
-  border-bottom: 2px solid var(---color-2);
+  border-bottom: 2px solid var(---accentColor);
 }
 
 /* Headings */
 .cm-formatting.cm-header {
-  color: var(---color-3);
+  color: var(---overrides-accentColor);
 }
 .inline-title {
   font-size: 2.5rem;
@@ -293,16 +313,16 @@ body {
 
 /* Lists */
 .HyperMD-list-line.cm-active .list-bullet:after {
-  color: var(---color-3);
-  background-color: var(---color-3);
+  color: var(---overrides-accentColor);
+  background-color: var(---overrides-accentColor);
 }
 
 /* Tasks */
 .HyperMD-task-line.cm-active .task-list-item-checkbox {
-  border-color: var(---color-3);
+  border-color: var(---overrides-accentColor);
 }
 .HyperMD-task-line.cm-active .task-list-item-checkbox:checked {
-  background-color: var(---color-3)
+  background-color: var(---overrides-accentColor)
 }
 
 /* Quotes */
@@ -310,7 +330,7 @@ body {
   position: relative;
   display: inline-block !important;
   margin-left: calc(-1 * var(--size-4-4));
-  color: var(---color-3);
+  color: var(---overrides-accentColor);
   min-width: var(--size-4-4) !important;
 } 
 .HyperMD-quote {
@@ -345,9 +365,9 @@ body {
 
 /* Mermaid */
 .mermaid .node rect {
-  fill: var(---color-3) !important;
+  fill: var(---overrides-accentColor) !important;
 }
 .mermaid span {
-  color: var(---color-1) !important;
+  color: var(---baseBackground) !important;
 }
 
