@@ -3,12 +3,15 @@ import {GoogleGenerativeAI, GenerativeModel} from '@google/generative-ai'
 import mixinSetup from 'src/helen/setup'
 import mixinRibbon from 'src/helen/ribbon'
 import mixinEditor from 'src/helen/editor'
+import HeleniteTheme from 'src/theme/setup'
 
+// @see src/helen/setup.ts for Theme setup as well
 export class HeleniteCore extends Plugin {
   settings: any
   state: {isActive: false}
   genAI: GoogleGenerativeAI
   model: GenerativeModel
+  theme: HeleniteTheme
   chatRegex = /(?:^|\n)>\s?\[!chat\s?([^\]]*)\]/i
 
   // Setup
