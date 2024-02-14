@@ -16,13 +16,17 @@ export default function mixinSetup(baseClass: typeof HeleniteCore) {
       this.genAI = new GoogleGenerativeAI(this.settings.geminiAPI)
       this.model = this.genAI.getGenerativeModel({model: 'gemini-pro'})
       this.theme = new HeleniteTheme(this)
-      console.log('🟢🟢🟢 START')
+
+      let hasScanned = false
+      this.app.workspace.onLayoutReady(() => {
+        !hasScanned && this.theme.applySplittingToAllTitles()
+        hasScanned = true
+      })
     }
 
     // @todo
     onunload() {
       this.theme.unload()
-      console.log('🔴🔴🔴 STOP')
     }
 
     async init() {
