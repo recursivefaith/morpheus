@@ -196,6 +196,9 @@ body.theme-light {
 .cm-s-obsidian span.cm-strong, strong {
   color: var(---color-text-1-bright);
 }
+.cm-sizer {
+  position: relative;
+}
 
 /* Links */
 .cm-underline,
@@ -352,6 +355,11 @@ h1, h2, h3, h4, h5, h6,
 
 
 /* Title */
+.inline-title:not(.helenite-title-placeholder) {
+  color: var(--background-primary) !important;
+  background: none !important;
+}
+
 .inline-title,
 .helenite-title-placeholder > span {
   font-family: 'HaulageCommercial-Striped';
@@ -362,16 +370,16 @@ h1, h2, h3, h4, h5, h6,
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;  
 }
+
 .inline-title::first-letter,
-.helenite-title-placeholder > span:first-child:first-letter {
+.helenite-title-placeholder > span:first-child:first-letter,
+.helenite-title-placeholder .char.capital {
   color: var(---color-2);
   background: linear-gradient(to bottom, var(---color-2) 70%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;  
+  -webkit-text-fill-color: transparent;
 }
-.cm-sizer {
-  position: relative;
-}
+
 .helenite-title-placeholder {
   position: absolute;
   top: 0;
