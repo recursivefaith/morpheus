@@ -402,3 +402,14 @@ h1, h2, h3, h4, h5, h6,
 .callout[data-callout^="chat-system"] {
   --callout-color: var(--callout-warning);
 }
+
+
+
+/* Matrix Rain area */
+.helenite-matrix-rain-root,
+.helenite-matrix-rain-root * {
+  font-family: monospace !important;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(---color-1-light2)
+}
