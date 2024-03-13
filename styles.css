@@ -409,7 +409,34 @@ h1, h2, h3, h4, h5, h6,
 .helenite-matrix-rain-root,
 .helenite-matrix-rain-root * {
   font-family: monospace !important;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: var(---color-1-light2)
+  white-space: break-spaces !important;
+  word-wrap: break-word !important;
+  line-height: 1 !important;
+  position: relative;
+  overflow: hidden;
+}
+.helenite-matrix-rain-root [data-layer="0"] {color: var(---color-1-light2)}
+.helenite-matrix-rain-root [data-layer="1"] {color: var(---color-1-light3)}
+.helenite-matrix-rain-root [data-layer="2"] {color: var(---color-1-bright)}
+.helenite-matrix-rain-root [data-layer="3"] {color: var(---color-3)}
+.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-2)}
+.helenite-matrix-rain-root [data-layer="5"] {color: var(---color-text-1)}
+
+.helenite-matrix-rain-root {
+  position: relative;
+  height: 100%;
+  width: inherit;
+  display: inline-block;
+}
+.helenite-matrix-layer {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+[data-type="helenite-matrix"] > .view-content {
+  overflow: hidden;
 }
