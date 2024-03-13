@@ -1,4 +1,5 @@
 import {HeleniteCore} from 'main'
+// import './style.css'
 import 'splitting/dist/splitting.css'
 import 'splitting/dist/splitting-cells.css'
 import Splitting from 'splitting'
@@ -43,6 +44,13 @@ export default class setupTheme {
     this.observer.observe($title, { childList: true, characterData: true, subtree: true })
     $container.querySelector('.helenite-title-placeholder')
     this.split($title, $placeholder)
+  }
+
+  /**
+   * Setup
+   */
+  setup () {
+    console.log('test')
   }
 
 

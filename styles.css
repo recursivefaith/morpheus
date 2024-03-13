@@ -366,7 +366,7 @@ h1, h2, h3, h4, h5, h6,
   font-weight: normal;
   font-size: 3.5rem !important;
 
-  background: linear-gradient(to bottom, var(---color-text-1-bright) 70%, var(---color-1-bright) 50%);
+  background: linear-gradient(to bottom, var(---color-text-1-bright) 69%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;  
 }
@@ -375,7 +375,7 @@ h1, h2, h3, h4, h5, h6,
 .helenite-title-placeholder > span:first-child:first-letter,
 .helenite-title-placeholder .char.capital {
   color: var(---color-2);
-  background: linear-gradient(to bottom, var(---color-2) 70%, var(---color-1-bright) 50%);
+  background: linear-gradient(to bottom, var(---color-2) 69%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

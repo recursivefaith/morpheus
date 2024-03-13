@@ -2,7 +2,7 @@ import {HeleniteCore} from '../../main'
 import {GoogleGenerativeAI} from '@google/generative-ai'
 import HeleniteSettingsTab from './settings'
 import HeleniteTheme from '../theme/setup'
-import {addIcon} from 'obsidian'
+import {addIcon, WorkspaceLeaf} from 'obsidian'
 
 // Settings
 interface HeleniteSettings {geminiAPI: string}
@@ -13,6 +13,7 @@ export default function mixinSetup(baseClass: typeof HeleniteCore) {
     async onload() {
       await this.loadSettings()
       await this.init()
+      
       this.genAI = new GoogleGenerativeAI(this.settings.geminiAPI)
       this.model = this.genAI.getGenerativeModel({model: 'gemini-pro'})
       this.theme = new HeleniteTheme(this)
@@ -28,9 +29,10 @@ export default function mixinSetup(baseClass: typeof HeleniteCore) {
     onunload() {
       this.theme.unload()
     }
-
+    
     async init() {
-      // Ribbon
+      // Main Ribbon Button
+      this.addSettingTab(new HeleniteSettingsTab(this.app, this))
       addIcon('heliniteLogo', `<g transform="translate(100, 100) scale(0.02015625,0.02015625) rotate(-180)" fill="currentColor">
         <path d="M2496 4893 c-38 -20 -680 -501 -684 -512 -1 -4 166 -135 373 -290 l375 -281 375 281 c207 155 374 286 373 290 -4 11 -649 494 -686 513 -39 20 -88 20 -126 -1z"/>
         <path d="M1674 4069 c3 -19 51 -493 106 -1054 56 -561 103 -1030 105 -1042 5 -21 8 -22 88 -16 110 8 183 -12 319 -87 60 -33 111 -60 113 -60 3 0 5 391 5 869 l0 869 -337 252 c-186 140 -353 265 -371 278 l-34 26 6 -35z"/>
@@ -43,16 +45,27 @@ export default function mixinSetup(baseClass: typeof HeleniteCore) {
         <path d="M4201 2573 c-22 -83 -211 -891 -211 -901 0 -8 32 -12 105 -12 155 0 249 -26 341 -96 l32 -23 135 322 c75 177 176 418 225 535 l90 212 -354 0 -353 0 -10 -37z"/>
         <path d="M1960 1653 c-8 -3 -122 -71 -253 -149 l-237 -144 -268 0 -267 0 -310 -103 c-171 -57 -324 -111 -341 -120 -39 -20 -39 -20 -172 -278 l-112 -216 0 -157 c0 -184 12 -221 80 -256 39 -20 53 -20 2480 -20 2427 0 2441 0 2480 20 68 35 80 72 80 255 0 138 -2 160 -21 196 -24 48 -53 63 -355 180 l-190 74 -147 196 c-106 142 -157 202 -181 213 -29 13 -78 16 -304 16 l-270 0 -244 148 c-319 193 -270 192 -600 10 l-247 -137 -248 136 c-197 108 -257 137 -293 139 -25 2 -52 1 -60 -3z"/>
       </g>`)
-      const ribbonIconEl = this.addRibbonIcon('heliniteLogo', 'Helenite', (evt: MouseEvent) => this.onRibbonClick(evt))
+
+      const ribbonIconEl = this.addRibbonIcon('heliniteLogo', 'HelenAI', (evt: MouseEvent) => this.onRibbonMainClick(evt))
       ribbonIconEl.addClass('helenite')
 
-      // Commands
-      this.addSettingTab(new HeleniteSettingsTab(this.app, this))
       this.addCommand({
         id: 'helenite-start-submit',
         name: 'Start/Submit Chat',
         hotkeys: [{modifiers: ['Mod'], key: 'Enter'}],
-        callback: () => this.onRibbonClick(null),
+        callback: () => this.onRibbonMainClick(null),
+      })
+
+      // Matrix Rain
+      this.registerView('helenite-matrix', (leaf: WorkspaceLeaf) => new MatrixTab(this, leaf))
+      const matrixIconEl = this.addRibbonIcon('rabbit', 'Show Matrix Rain', (evt: MouseEvent) => this.onRibbonMatrixClick(evt))
+      matrixIconEl.addClass('helenite')
+
+      this.addCommand({
+        id: 'helenite-start-matrix-rain',
+        name: 'Show Matrix Rain',
+        hotkeys: [{modifiers: ['Ctrl', 'Shift'], key: 'M'}],
+        callback: () => this.onRibbonMatrixClick(null),
       })
     }
 

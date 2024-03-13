@@ -1,11 +1,12 @@
 import {Notice} from 'obsidian'
 import {HeleniteCore} from '../../main'
+import {MatrixTab} from '../matrix/viz'
 import llm from './model/gemini'
 
 export default function mixinRibbon(baseClass: typeof HeleniteCore) {
   return class extends baseClass {
     
-    async onRibbonClick(evt: MouseEvent | null) {
+    async onRibbonMainClick(evt: MouseEvent | null) {
       // If in chat, send to LLM
       if (this.isCursorInChat()) {
         const rawChat = this.getActiveChat()
@@ -42,6 +43,13 @@ export default function mixinRibbon(baseClass: typeof HeleniteCore) {
       } else {
         this.createSpaceFor('', '')
       }
-    }    
+    }
+
+    // Matrix rain tab
+    async onRibbonMatrixClick(evt: MouseEvent | null) {
+      const leaf = this.app.workspace.getLeaf('split', 'vertical')
+      const tab = new MatrixTab(this, leaf)
+      leaf.open(tab)
+    }
   }
 }

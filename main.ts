@@ -18,7 +18,8 @@ export class HeleniteCore extends Plugin {
   saveSettings(){}
 
   // Ribbon
-  onRibbonClick(evt: MouseEvent | null): Promise<void> {return new Promise((resolve) => {resolve()})}
+  onRibbonMainClick(evt: MouseEvent | null): Promise<void> {return new Promise((resolve) => {resolve()})}
+  onRibbonMatrixClick(evt: MouseEvent | null): Promise<void> {return new Promise((resolve) => {resolve()})}
   
   // Editor
   onSubmitChat(){}
