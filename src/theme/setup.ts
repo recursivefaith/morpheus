@@ -10,9 +10,11 @@ export default class setupTheme {
   
   constructor (plugin: HeleniteCore) {
     this.plugin = plugin
-    this.plugin.app.workspace.on('active-leaf-change', () => {
-      this.applySplittingToTitle()
-    })
+    this.plugin.registerEvent(
+      this.plugin.app.workspace.on('active-leaf-change', () => {
+        this.applySplittingToTitle()
+      })
+    )
   }
 
   applySplittingToTitle () {
@@ -56,7 +58,6 @@ export default class setupTheme {
 
   applySplittingToAllTitles () {
     const $allTitles = document.querySelectorAll('.inline-title:not(.placeholder)')
-    console.log($allTitles)
     $allTitles.forEach(($title: HTMLElement) => {
       const $placeholder = this.createPlaceholder($title)
       this.split($title, $placeholder)

@@ -2,6 +2,7 @@ import {HeleniteCore} from '../../main'
 import {GoogleGenerativeAI} from '@google/generative-ai'
 import HeleniteSettingsTab from './settings'
 import HeleniteTheme from '../theme/setup'
+import {MatrixTab} from '../matrix/viz'
 import {addIcon, WorkspaceLeaf} from 'obsidian'
 
 // Settings
@@ -11,13 +12,17 @@ const DEFAULT_SETTINGS: HeleniteSettings = {geminiAPI: ''}
 export default function mixinSetup(baseClass: typeof HeleniteCore) {
   return class extends baseClass {
     async onload() {
+      // Register views
+      this.registerView('helenite-matrix', (leaf: WorkspaceLeaf) => new MatrixTab(this, leaf))
+      
+      // Setup
       await this.loadSettings()
       await this.init()
-      
       this.genAI = new GoogleGenerativeAI(this.settings.geminiAPI)
       this.model = this.genAI.getGenerativeModel({model: 'gemini-pro'})
       this.theme = new HeleniteTheme(this)
 
+      // Scan for fancy titles
       let hasScanned = false
       this.app.workspace.onLayoutReady(() => {
         !hasScanned && this.theme.applySplittingToAllTitles()
@@ -57,7 +62,6 @@ export default function mixinSetup(baseClass: typeof HeleniteCore) {
       })
 
       // Matrix Rain
-      this.registerView('helenite-matrix', (leaf: WorkspaceLeaf) => new MatrixTab(this, leaf))
       const matrixIconEl = this.addRibbonIcon('rabbit', 'Show Matrix Rain', (evt: MouseEvent) => this.onRibbonMatrixClick(evt))
       matrixIconEl.addClass('helenite')
 
