@@ -130,7 +130,6 @@ export default function mixinEditor(baseClass: typeof HeleniteCore) {
     removeChatArtifacts(responseId: string):void {
       const editor = this.getEditor()
       if (!editor) return
-      console.log(responseId)
   
       let content = editor.getValue()
       let index = content.lastIndexOf(`> [!chat agent id=${responseId}] Responding...`)

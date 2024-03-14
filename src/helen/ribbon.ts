@@ -21,10 +21,13 @@ export default function mixinRibbon(baseClass: typeof HeleniteCore) {
         })
 
         // Stream results
+        this.isThinking = true
+        this.waitingForFirstChunk = false
         try {
           const result = await chat.sendMessageStream(message.parts)
           let text = ''
           for await (const chunk of result.stream) {
+            this.waitingForFirstChunk = true
             const chunkText = await chunk.text()
             text += chunkText
             if (!this.writeAgentChunk(responseId, chunkText)) {
@@ -39,6 +42,9 @@ export default function mixinRibbon(baseClass: typeof HeleniteCore) {
 
         // Cleanup
         this.removeChatArtifacts(responseId)
+        this.isThinking = false
+        this.waitingForFirstChunk = true
+
         // if not in chat, create one
       } else {
         this.createSpaceFor('', '')

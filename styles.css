@@ -421,18 +421,26 @@ h1, h2, h3, h4, h5, h6,
 .helenite-matrix-rain-root [data-layer="0"] {color: var(---color-1-light2)}
 .helenite-matrix-rain-root [data-layer="1"] {color: var(---color-1-light3)}
 .helenite-matrix-rain-root [data-layer="2"] {color: var(---color-1-bright)}
-.helenite-matrix-rain-root [data-layer="3"] {
-  color: var(---color-3-light);
-  font-weight: bold;
-  text-shadow: #fff 1em 1em 2em;
-}
-.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-text-1)}
+.helenite-matrix-rain-root [data-layer="3"] {color: var(---color-3-light);}
+
+/* Sparkle change */
+.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-text-1-bright)}
 .helenite-matrix-rain-root [data-layer="5"] {color: var(---color-2)}
 
 /* Negative */
 .helenite-matrix-rain-root [data-layer="6"] {color: var(---color-2-light)}
 .helenite-matrix-rain-root [data-layer="7"] {color: var(---color-2)}
 .helenite-matrix-rain-root [data-layer="8"] {color: var(---color-2-dark)}
+
+/* AI */
+.helenite-matrix-rain-root [data-layer="9"] {color: var(---color-3-light)}
+.helenite-matrix-rain-root [data-layer="10"] {color: var(---color-3)}
+.helenite-matrix-rain-root [data-layer="11"] {color: var(---color-3-dark)}
+
+/* Info */
+.helenite-matrix-rain-root [data-layer="12"] {color: var(---color-4)}
+.helenite-matrix-rain-root [data-layer="13"] {color: var(---color-4-dark1)}
+.helenite-matrix-rain-root [data-layer="14"] {color: var(---color-4-dark2)}
 
 .helenite-matrix-rain-root {
   position: relative;

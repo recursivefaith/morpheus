@@ -36,7 +36,7 @@ export class MatrixTab extends ItemView {
     this.$root.classList.add('helenite-matrix-rain-root')
     this.$container.appendChild(this.$root)
 
-    this.onResize()
+    setTimeout(() => this.onResize(), 100)
 
     this.registerInterval(
       // @fixme possible bug due to environment: https://stackoverflow.com/questions/53189729/typescript-error-setinterval-type-timer-is-not-assignable-to-type-number
@@ -58,8 +58,7 @@ export class MatrixTab extends ItemView {
 
     // Sometimes the height is 0
     if ($div.clientHeight === 0) {
-      setTimeout(() => this.onResize(), 50)
-      console.log('waiting')
+      setTimeout(() => this.onResize(), 100)
       return
     }
     const initialHeight = $div.clientHeight
@@ -103,12 +102,19 @@ export class MatrixTab extends ItemView {
       <div class="helenite-matrix-layer" data-layer="3"></div>
       <div class="helenite-matrix-layer" data-layer="4"></div>
       <div class="helenite-matrix-layer" data-layer="5"></div>
-      
-      
+     
       <div class="helenite-matrix-layer" data-layer="6"></div>
       <div class="helenite-matrix-layer" data-layer="7"></div>
       <div class="helenite-matrix-layer" data-layer="8"></div>
-    `
+
+      <div class="helenite-matrix-layer" data-layer="9"></div>
+      <div class="helenite-matrix-layer" data-layer="10"></div>
+      <div class="helenite-matrix-layer" data-layer="11"></div>
+
+      <div class="helenite-matrix-layer" data-layer="12"></div>
+      <div class="helenite-matrix-layer" data-layer="13"></div>
+      <div class="helenite-matrix-layer" data-layer="14"></div>
+      `
     const $layers = this.$root.querySelectorAll('.helenite-matrix-layer')
     this.layers = []
     $layers.forEach($layer => {
@@ -124,18 +130,32 @@ export class MatrixTab extends ItemView {
     this.layers.forEach((layer: Layer) => {
       layer.text = ''
     })
-    
-    // Add a random character for each cell
+
+    // Empty fill string
+    // @todo cache
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         this.layers[0].text += this.getRandomChar()
-        for (let n = 1; n < this.layers.length; n++) {
-          this.layers[n].text += '\u00A0'
-        }
+        this.layers[1].text += '\u00A0'
       }
     }
+    for (let n = 2; n < this.layers.length; n++) {
+      this.layers[n].text = this.layers[1].text
+    }
 
-    // Drop matrix rain
+    // Create matrix while thinking
+    let count = Math.max(3, Math.random()*this.width/2)
+    if (this.plugin.isThinking && !this.plugin.waitingForFirstChunk && Math.random() > .9) {
+      this.createRain({style: 'primary', count: count*1})
+      this.createRain({style: 'info', count: count*.25})
+    }
+
+    // Used to ignore painting on top of each other
+    let changedCells: any = []
+    for (let i = 0; i < this.layers[1].text.length; i++) {
+      changedCells.push(false)
+    }
+    
     this.drops.forEach((drop, n) => {
       drop.y += drop.speed
       const y = Math.floor(drop.y)
@@ -146,17 +166,29 @@ export class MatrixTab extends ItemView {
         return
       }
 
-      for (let i = 0; i < drop.len; i++) {
+      for (let i = drop.len; i >= 0; i--) {
         // Get cell to change
         const rowLen = (y-i)*(this.width-1)
         let cellToChange = drop.x + rowLen
-        if (cellToChange < 0 || cellToChange >= this.layers[0].text.length) continue
+        if (cellToChange < 0 || cellToChange >= this.layers[1].text.length) continue
         
-        // Change
+        // Skip or clear if already filled from top
+        if (i && changedCells?.[cellToChange]) continue
+        changedCells[cellToChange] = true
+
+        // Change style
         let layerIdx
         switch (drop.style) {
+          case 'secondary':
+            layerIdx = Math.floor(map(i, 0, drop.len, 9, 11))
+          break
+
           case 'negative':
             layerIdx = Math.floor(map(i, 0, drop.len, 6, 8))
+          break
+
+          case 'info':
+            layerIdx = Math.floor(map(i, 0, drop.len, 12, 14))
           break
 
           default:
@@ -164,7 +196,6 @@ export class MatrixTab extends ItemView {
         }
 
         if (!i || (layerIdx === 3 && Math.random() > .5)) layerIdx=Math.floor(map(Math.random(), 0, 1, 3, 5))
-        this.layers[0].text = this.layers[0].text.slice(0, Math.max(0, cellToChange-1)) + '\u00A0' + this.layers[0].text.slice(cellToChange)
         this.layers[layerIdx].text = this.layers[layerIdx].text.slice(0, Math.max(0, cellToChange-1)) + this.getRandomChar() + this.layers[layerIdx].text.slice(cellToChange)
       }
     })
@@ -176,7 +207,7 @@ export class MatrixTab extends ItemView {
   }
 
   getRandomChar () {
-    const caps = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00A0'
+    const caps = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     const lower = caps.toLowerCase()
     const nums = '0123456789'
     const alphabet = caps + lower + nums
@@ -190,25 +221,29 @@ export class MatrixTab extends ItemView {
    * - If backspacing or deleting, show a red line
    */
   onEditorChange (editor: any, info: any) {
-    console.log(editor, info)
-    if (editor?.getValue()?.length < info.data?.length) {
-      this.createRain({style: 'negative'})
+    let count = Math.max(3, Math.random()*this.width/30)
+    
+    if (this.plugin.isThinking) {
+      this.createRain({style: 'primary', count: count*1})
+      this.createRain({style: 'secondary', count: count*.25})
+    } else if (editor?.getValue()?.length < info.data?.length) {
+      this.createRain({style: 'negative', count})
     } else {
-      this.createRain({style: 'default'})
+      this.createRain({style: 'primary', count})
     }
   }
 
   /**
    * Creates a new matrix rain drop
    */
-  createRain (opts: {style: string}) {
-    for (let i = 0; i < Math.max(3, Math.random()*this.width*1.5); i++) {
+  createRain (opts: {style: string, count: number}) {
+    for (let i = 0; i < opts.count; i++) {
       // y*speed = maximum time for rain to clear
       this.drops.push({
         x: Math.floor(Math.random()*this.width),
-        y: Math.floor(Math.random()*-this.height*3.5),
+        y: Math.floor(Math.random()*-this.height*3),
         len: Math.floor(Math.random() * this.height) + 2,
-        speed: Math.random() * 1.5 + .25,
+        speed: Math.random() * .25 + .05,
         style: opts.style
       })
     }

@@ -8,7 +8,8 @@ import HeleniteTheme from 'src/theme/setup'
 // @see src/helen/setup.ts for Theme setup as well
 export class HeleniteCore extends Plugin {
   settings: any
-  state: {isActive: false}
+  isThinking: boolean
+  waitingForFirstChunk: boolean
   genAI: GoogleGenerativeAI
   model: GenerativeModel
   theme: HeleniteTheme
