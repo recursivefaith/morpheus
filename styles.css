@@ -29,6 +29,7 @@ body.theme-light {
   ---color-2-dark: #52101e;
   
   ---color-3: #eb9b27;
+  ---color-3-light: #f0b84b;
   ---color-3-dark: #896126;
   ---color-3-dark-rgb: 137 97 38;
 
@@ -415,12 +416,23 @@ h1, h2, h3, h4, h5, h6,
   position: relative;
   overflow: hidden;
 }
+
+/* Default */
 .helenite-matrix-rain-root [data-layer="0"] {color: var(---color-1-light2)}
 .helenite-matrix-rain-root [data-layer="1"] {color: var(---color-1-light3)}
 .helenite-matrix-rain-root [data-layer="2"] {color: var(---color-1-bright)}
-.helenite-matrix-rain-root [data-layer="3"] {color: var(---color-3)}
-.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-2)}
-.helenite-matrix-rain-root [data-layer="5"] {color: var(---color-text-1)}
+.helenite-matrix-rain-root [data-layer="3"] {
+  color: var(---color-3-light);
+  font-weight: bold;
+  text-shadow: #fff 1em 1em 2em;
+}
+.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-text-1)}
+.helenite-matrix-rain-root [data-layer="5"] {color: var(---color-2)}
+
+/* Negative */
+.helenite-matrix-rain-root [data-layer="6"] {color: var(---color-2-light)}
+.helenite-matrix-rain-root [data-layer="7"] {color: var(---color-2)}
+.helenite-matrix-rain-root [data-layer="8"] {color: var(---color-2-dark)}
 
 .helenite-matrix-rain-root {
   position: relative;

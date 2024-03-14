@@ -103,6 +103,11 @@ export class MatrixTab extends ItemView {
       <div class="helenite-matrix-layer" data-layer="3"></div>
       <div class="helenite-matrix-layer" data-layer="4"></div>
       <div class="helenite-matrix-layer" data-layer="5"></div>
+      
+      
+      <div class="helenite-matrix-layer" data-layer="6"></div>
+      <div class="helenite-matrix-layer" data-layer="7"></div>
+      <div class="helenite-matrix-layer" data-layer="8"></div>
     `
     const $layers = this.$root.querySelectorAll('.helenite-matrix-layer')
     this.layers = []
@@ -143,15 +148,22 @@ export class MatrixTab extends ItemView {
 
       for (let i = 0; i < drop.len; i++) {
         // Get cell to change
-        const rowLen = (y-i)*(this.width-2)
+        const rowLen = (y-i)*(this.width-1)
         let cellToChange = drop.x + rowLen
         if (cellToChange < 0 || cellToChange >= this.layers[0].text.length) continue
         
-        // Sparkle
-        let layerIdx = Math.floor(map(i, 0, drop.len, this.layers.length-3, 0))
-        if (!i || (layerIdx === 3 && Math.random() > .5)) layerIdx=Math.floor(map(Math.random(), 0, 1, 3, 5))
-        
         // Change
+        let layerIdx
+        switch (drop.style) {
+          case 'negative':
+            layerIdx = Math.floor(map(i, 0, drop.len, 6, 8))
+          break
+
+          default:
+            layerIdx = Math.floor(map(i, 0, drop.len, 3, 0))
+        }
+
+        if (!i || (layerIdx === 3 && Math.random() > .5)) layerIdx=Math.floor(map(Math.random(), 0, 1, 3, 5))
         this.layers[0].text = this.layers[0].text.slice(0, Math.max(0, cellToChange-1)) + '\u00A0' + this.layers[0].text.slice(cellToChange)
         this.layers[layerIdx].text = this.layers[layerIdx].text.slice(0, Math.max(0, cellToChange-1)) + this.getRandomChar() + this.layers[layerIdx].text.slice(cellToChange)
       }
@@ -175,22 +187,29 @@ export class MatrixTab extends ItemView {
   /**
    * React to editor updates
    * - Drop one matrix line
+   * - If backspacing or deleting, show a red line
    */
-  onEditorChange () {
-    this.createRain()
+  onEditorChange (editor: any, info: any) {
+    console.log(editor, info)
+    if (editor?.getValue()?.length < info.data?.length) {
+      this.createRain({style: 'negative'})
+    } else {
+      this.createRain({style: 'default'})
+    }
   }
 
   /**
    * Creates a new matrix rain drop
    */
-  createRain () {
+  createRain (opts: {style: string}) {
     for (let i = 0; i < Math.max(3, Math.random()*this.width*1.5); i++) {
       // y*speed = maximum time for rain to clear
       this.drops.push({
         x: Math.floor(Math.random()*this.width),
         y: Math.floor(Math.random()*-this.height*3.5),
         len: Math.floor(Math.random() * this.height) + 2,
-        speed: Math.random() * 1.25 + .5
+        speed: Math.random() * 1.5 + .25,
+        style: opts.style
       })
     }
   }
