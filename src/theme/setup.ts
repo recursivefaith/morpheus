@@ -1,18 +1,19 @@
-import {HeleniteCore} from 'main'
+import {MorpheusCore} from 'main'
 // import './style.css'
 import 'splitting/dist/splitting.css'
 import 'splitting/dist/splitting-cells.css'
 import Splitting from 'splitting'
 
 export default class setupTheme {
-  plugin: HeleniteCore
+  plugin: MorpheusCore
   observer: MutationObserver
   
-  constructor (plugin: HeleniteCore) {
+  constructor (plugin: MorpheusCore) {
     this.plugin = plugin
     this.plugin.registerEvent(
       this.plugin.app.workspace.on('active-leaf-change', () => {
         this.applySplittingToTitle()
+        console.log('apply')
       })
     )
   }
@@ -38,13 +39,13 @@ export default class setupTheme {
     })
 
     // Delete existing placeholders
-    const $placeholders = $container.querySelectorAll('.helenite-title-placeholder')
+    const $placeholders = $container.querySelectorAll('.morpheus-title-placeholder')
     $placeholders.forEach(($placeholder: HTMLElement) => $placeholder.remove())
 
     // Create new placeholder
     const $placeholder = this.createPlaceholder($title)
     this.observer.observe($title, { childList: true, characterData: true, subtree: true })
-    $container.querySelector('.helenite-title-placeholder')
+    $container.querySelector('.morpheus-title-placeholder')
     this.split($title, $placeholder)
   }
 
@@ -74,10 +75,10 @@ export default class setupTheme {
 
   createPlaceholder ($title: HTMLElement) {
     // @ts-ignore
-    let $placeholder = this.plugin.app.workspace.activeLeaf.containerEl.querySelector('.helenite-title-placeholder')
+    let $placeholder = this.plugin.app.workspace.activeLeaf.containerEl.querySelector('.morpheus-title-placeholder')
     if ($placeholder) {$placeholder.remove()}
     $placeholder = document.createElement('div')
-    $placeholder.classList.add('inline-title', 'helenite-title-placeholder')
+    $placeholder.classList.add('inline-title', 'morpheus-title-placeholder')
     $title?.parentNode?.insertAfter($placeholder, $title)
 
     return $placeholder
@@ -86,7 +87,7 @@ export default class setupTheme {
   
   unload () {
     if (this.observer) {this.observer.disconnect()}
-    const $placeholders = document.querySelectorAll('.helenite-title-placeholder')
+    const $placeholders = document.querySelectorAll('.morpheus-title-placeholder')
     $placeholders.forEach(($placeholder: HTMLElement) => $placeholder.remove())
   }
 

@@ -26,14 +26,14 @@ export class MatrixTab extends ItemView {
     )
   }
 
-  getViewType(): string {return 'helenite-matrix'}
+  getViewType(): string {return 'morpheus-matrix'}
   getDisplayText(): string {return 'Matrix Rain'}  
 
   async onOpen(): Promise<void> {
     this.$container = this.containerEl.querySelector('.view-content') as HTMLElement
 
     this.$root = document.createElement('div')
-    this.$root.classList.add('helenite-matrix-rain-root')
+    this.$root.classList.add('morpheus-matrix-rain-root')
     this.$container.appendChild(this.$root)
 
     setTimeout(() => this.onResize(), 100)
@@ -50,7 +50,7 @@ export class MatrixTab extends ItemView {
   // - Create components
   onResize(): void {
     const $div = document.createElement('div')
-    $div.classList.add('helenite-matrix-rain-dummy')
+    $div.classList.add('morpheus-matrix-rain-dummy')
     $div.innerHTML = '#'
     $div.style.overflowWrap = 'break-word'
     $div.style.whiteSpace = 'pre-wrap'
@@ -96,26 +96,26 @@ export class MatrixTab extends ItemView {
     // 4 = secondary
     // 5 = tertiary
     this.$root.innerHTML = `
-      <div class="helenite-matrix-layer" data-layer="0"></div>
-      <div class="helenite-matrix-layer" data-layer="1"></div>
-      <div class="helenite-matrix-layer" data-layer="2"></div>
-      <div class="helenite-matrix-layer" data-layer="3"></div>
-      <div class="helenite-matrix-layer" data-layer="4"></div>
-      <div class="helenite-matrix-layer" data-layer="5"></div>
+      <div class="morpheus-matrix-layer" data-layer="0"></div>
+      <div class="morpheus-matrix-layer" data-layer="1"></div>
+      <div class="morpheus-matrix-layer" data-layer="2"></div>
+      <div class="morpheus-matrix-layer" data-layer="3"></div>
+      <div class="morpheus-matrix-layer" data-layer="4"></div>
+      <div class="morpheus-matrix-layer" data-layer="5"></div>
      
-      <div class="helenite-matrix-layer" data-layer="6"></div>
-      <div class="helenite-matrix-layer" data-layer="7"></div>
-      <div class="helenite-matrix-layer" data-layer="8"></div>
+      <div class="morpheus-matrix-layer" data-layer="6"></div>
+      <div class="morpheus-matrix-layer" data-layer="7"></div>
+      <div class="morpheus-matrix-layer" data-layer="8"></div>
 
-      <div class="helenite-matrix-layer" data-layer="9"></div>
-      <div class="helenite-matrix-layer" data-layer="10"></div>
-      <div class="helenite-matrix-layer" data-layer="11"></div>
+      <div class="morpheus-matrix-layer" data-layer="9"></div>
+      <div class="morpheus-matrix-layer" data-layer="10"></div>
+      <div class="morpheus-matrix-layer" data-layer="11"></div>
 
-      <div class="helenite-matrix-layer" data-layer="12"></div>
-      <div class="helenite-matrix-layer" data-layer="13"></div>
-      <div class="helenite-matrix-layer" data-layer="14"></div>
+      <div class="morpheus-matrix-layer" data-layer="12"></div>
+      <div class="morpheus-matrix-layer" data-layer="13"></div>
+      <div class="morpheus-matrix-layer" data-layer="14"></div>
       `
-    const $layers = this.$root.querySelectorAll('.helenite-matrix-layer')
+    const $layers = this.$root.querySelectorAll('.morpheus-matrix-layer')
     this.layers = []
     $layers.forEach($layer => {
       this.layers.push({

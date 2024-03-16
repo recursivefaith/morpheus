@@ -1,11 +1,11 @@
 {
-	"id": "obsidian-helenite",
-	"name": "Obsidian Helenite",
+	"id": "obsidian-morpheus",
+	"name": "Morpheus",
 	"version": "0.15.0",
 	"minAppVersion": "0.15.0",
 	"description": "A free AI copilot, web clipper, and vault visualizer for Obsidian Notes with accompanying theme",
-	"author": "tollezac",
-	"authorUrl": "https://tollezac.github.com",
-	"fundingUrl": "https://buymeacoffee.com/tollezac",
+	"author": "ozramos",
+	"authorUrl": "https://publish.obsidian.md/oz",
+	"fundingUrl": "https://github.com/ozramos/sponsor",
 	"isDesktopOnly": false
 }

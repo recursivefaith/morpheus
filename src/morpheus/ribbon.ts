@@ -1,9 +1,9 @@
 import {Notice} from 'obsidian'
-import {HeleniteCore} from '../../main'
+import {MorpheusCore} from '../../main'
 import {MatrixTab} from '../matrix/viz'
 import llm from './model/gemini'
 
-export default function mixinRibbon(baseClass: typeof HeleniteCore) {
+export default function mixinRibbon(baseClass: typeof MorpheusCore) {
   return class extends baseClass {
     
     async onRibbonMainClick(evt: MouseEvent | null) {

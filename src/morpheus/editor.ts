@@ -1,4 +1,4 @@
-import {HeleniteCore} from "../../main"
+import {MorpheusCore} from "../../main"
 import {MarkdownView, Notice} from 'obsidian'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAttrs from 'markdown-it-attrs'
@@ -7,7 +7,7 @@ import shellParser from 'shell-quote/parse'
 const md = new MarkdownIt({html: true})
 md.use(MarkdownItAttrs)
 
-export default function mixinEditor(baseClass: typeof HeleniteCore) {
+export default function mixinEditor(baseClass: typeof MorpheusCore) {
   return class extends baseClass {
     getEditor(): CodeMirror.Editor | null {
       const activeLeaf = this.app.workspace.activeLeaf

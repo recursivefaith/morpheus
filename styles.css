@@ -243,9 +243,10 @@ body.theme-light {
   font-size: 2.5rem;
   color: var(---color-text-1-bright);
 }
-h1, h2, h3, h4, h5, h6,
+body h1, body h2, body h3, body h4, body h5, body h6,
 .HyperMD-header {
   color: var(---color-text-1-bright);
+  opacity: 1;
 }
 
 /* Lists */
@@ -356,13 +357,13 @@ h1, h2, h3, h4, h5, h6,
 
 
 /* Title */
-.inline-title:not(.helenite-title-placeholder) {
+.inline-title:not(.morpheus-title-placeholder) {
   color: var(--background-primary) !important;
   background: none !important;
 }
 
 .inline-title,
-.helenite-title-placeholder > span {
+.morpheus-title-placeholder > span {
   font-family: 'HaulageCommercial-Striped';
   font-weight: normal;
   font-size: 3.5rem !important;
@@ -373,15 +374,15 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .inline-title::first-letter,
-.helenite-title-placeholder > span:first-child:first-letter,
-.helenite-title-placeholder .char.capital {
+.morpheus-title-placeholder > span:first-child:first-letter,
+.morpheus-title-placeholder .char.capital {
   color: var(---color-2);
   background: linear-gradient(to bottom, var(---color-2) 69%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.helenite-title-placeholder {
+.morpheus-title-placeholder {
   position: absolute;
   top: 0;
   pointer-events: none;
@@ -407,8 +408,8 @@ h1, h2, h3, h4, h5, h6,
 
 
 /* Matrix Rain area */
-.helenite-matrix-rain-root,
-.helenite-matrix-rain-root * {
+.morpheus-matrix-rain-root,
+.morpheus-matrix-rain-root * {
   font-family: monospace !important;
   white-space: break-spaces !important;
   word-wrap: break-word !important;
@@ -418,37 +419,37 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* Default */
-.helenite-matrix-rain-root [data-layer="0"] {color: var(---color-1-light2)}
-.helenite-matrix-rain-root [data-layer="1"] {color: var(---color-1-light3)}
-.helenite-matrix-rain-root [data-layer="2"] {color: var(---color-1-bright)}
-.helenite-matrix-rain-root [data-layer="3"] {color: var(---color-3-light);}
+.morpheus-matrix-rain-root [data-layer="0"] {color: var(---color-1-light2)}
+.morpheus-matrix-rain-root [data-layer="1"] {color: var(---color-1-light3)}
+.morpheus-matrix-rain-root [data-layer="2"] {color: var(---color-1-bright)}
+.morpheus-matrix-rain-root [data-layer="3"] {color: var(---color-3-light);}
 
 /* Sparkle change */
-.helenite-matrix-rain-root [data-layer="4"] {color: var(---color-text-1-bright)}
-.helenite-matrix-rain-root [data-layer="5"] {color: var(---color-2)}
+.morpheus-matrix-rain-root [data-layer="4"] {color: var(---color-text-1-bright)}
+.morpheus-matrix-rain-root [data-layer="5"] {color: var(---color-2)}
 
 /* Negative */
-.helenite-matrix-rain-root [data-layer="6"] {color: var(---color-2-light)}
-.helenite-matrix-rain-root [data-layer="7"] {color: var(---color-2)}
-.helenite-matrix-rain-root [data-layer="8"] {color: var(---color-2-dark)}
+.morpheus-matrix-rain-root [data-layer="6"] {color: var(---color-2-light)}
+.morpheus-matrix-rain-root [data-layer="7"] {color: var(---color-2)}
+.morpheus-matrix-rain-root [data-layer="8"] {color: var(---color-2-dark)}
 
 /* AI */
-.helenite-matrix-rain-root [data-layer="9"] {color: var(---color-3-light)}
-.helenite-matrix-rain-root [data-layer="10"] {color: var(---color-3)}
-.helenite-matrix-rain-root [data-layer="11"] {color: var(---color-3-dark)}
+.morpheus-matrix-rain-root [data-layer="9"] {color: var(---color-3-light)}
+.morpheus-matrix-rain-root [data-layer="10"] {color: var(---color-3)}
+.morpheus-matrix-rain-root [data-layer="11"] {color: var(---color-3-dark)}
 
 /* Info */
-.helenite-matrix-rain-root [data-layer="12"] {color: var(---color-4)}
-.helenite-matrix-rain-root [data-layer="13"] {color: var(---color-4-dark1)}
-.helenite-matrix-rain-root [data-layer="14"] {color: var(---color-4-dark2)}
+.morpheus-matrix-rain-root [data-layer="12"] {color: var(---color-4)}
+.morpheus-matrix-rain-root [data-layer="13"] {color: var(---color-4-dark1)}
+.morpheus-matrix-rain-root [data-layer="14"] {color: var(---color-4-dark2)}
 
-.helenite-matrix-rain-root {
+.morpheus-matrix-rain-root {
   position: relative;
   height: 100%;
   width: inherit;
   display: inline-block;
 }
-.helenite-matrix-layer {
+.morpheus-matrix-layer {
   display: inline-block;
   position: absolute;
   top: 0;
@@ -457,6 +458,16 @@ h1, h2, h3, h4, h5, h6,
   height: 100%;
 }
 
-[data-type="helenite-matrix"] > .view-content {
+[data-type="morpheus-matrix"] > .view-content {
   overflow: hidden;
+}
+
+
+/* Publish */
+body .site-body-left-column-site-logo img {
+  width: 64px;
+}
+body .site-body-left-column-site-name {
+  text-align: center;
+  padding-right: 0;
 }

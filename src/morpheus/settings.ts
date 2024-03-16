@@ -1,11 +1,11 @@
 import { App, PluginSettingTab, Setting } from 'obsidian'
-import {HeleniteCore} from '../../main'
+import {MorpheusCore} from '../../main'
 
 
-export default class HeleniteSettingsTab extends PluginSettingTab {
-	plugin: HeleniteCore;
+export default class MorpheusSettingsTab extends PluginSettingTab {
+	plugin: MorpheusCore;
 
-	constructor(app: App, plugin: HeleniteCore) {
+	constructor(app: App, plugin: MorpheusCore) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

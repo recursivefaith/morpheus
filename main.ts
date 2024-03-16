@@ -1,18 +1,18 @@
 import {Plugin} from 'obsidian'
 import {GoogleGenerativeAI, GenerativeModel} from '@google/generative-ai'
-import mixinSetup from 'src/helen/setup'
-import mixinRibbon from 'src/helen/ribbon'
-import mixinEditor from 'src/helen/editor'
-import HeleniteTheme from 'src/theme/setup'
+import mixinSetup from 'src/morpheus/setup'
+import mixinRibbon from 'src/morpheus/ribbon'
+import mixinEditor from 'src/morpheus/editor'
+import MatrixTheme from 'src/theme/setup'
 
-// @see src/helen/setup.ts for Theme setup as well
-export class HeleniteCore extends Plugin {
+// @see src/morpheus/setup.ts for Theme setup as well
+export class MorpheusCore extends Plugin {
   settings: any
   isThinking: boolean
   waitingForFirstChunk: boolean
   genAI: GoogleGenerativeAI
   model: GenerativeModel
-  theme: HeleniteTheme
+  theme: MatrixTheme
   chatRegex = /(?:^|\n)>\s?\[!chat\s?([^\]]*)\]/i
 
   // Setup
@@ -33,4 +33,4 @@ export class HeleniteCore extends Plugin {
   removeChatArtifacts(responseId: string):void {}
 }
 
-export default mixinEditor(mixinRibbon(mixinSetup(HeleniteCore)))
+export default mixinEditor(mixinRibbon(mixinSetup(MorpheusCore)))
