@@ -28,4 +28,5 @@
 
 # Acknowledgements
 
-> coming soon
+Along with the dependencies in `package.json`, this project also uses the following:
+- https://github.com/liamcain/obsidian-periodic-notes - Uses the file/folder picker in the Settings tab

@@ -1,5 +1,6 @@
 import { App, PluginSettingTab, Setting } from 'obsidian'
 import {FileSuggest} from '../theme/FileSuggester'
+import {FolderSuggest} from '../theme/FolderSuggester'
 import {MorpheusCore} from '../../main'
 
 
@@ -40,5 +41,19 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           });
       });
-	}
+
+    new Setting(this.containerEl)
+      .setName('Select Skill Folder')
+      .setDesc('Choose the default folder for skills')
+      .addSearch(searchComponent => {
+        new FolderSuggest(this.app, searchComponent.inputEl);
+        searchComponent.setPlaceholder('Type to search for a folder...')
+          .setValue(this.plugin.settings.selectedFolderPath)
+          .onChange(async (value) => {
+            // The 'value' will be the Folder path selected by the user from the dropdown
+            this.plugin.settings.selectedFolderPath = value;
+            await this.plugin.saveSettings();
+          });
+      });
+  }
 }

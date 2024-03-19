@@ -42,7 +42,7 @@ const context = await esbuild.context({
   format,
   target: "es2018",
   logLevel: "info",
-  sourcemap: (prod || publish || eject) ? false : "inline",
+  sourcemap: (prod || publish || eject) ? false : true,
   treeShaking: true,
   outfile: output,
 });
