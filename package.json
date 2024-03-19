@@ -7,8 +7,8 @@
 		"start": "node plugin.config.mjs",
 		"dev": "node plugin.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish",
-    "eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs eject",
-    "build:eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish && node plugin.config.mjs eject",
+		"eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs eject",
+		"build:eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish && node plugin.config.mjs eject",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"@google/generative-ai": "^0.2.0",
+		"@popperjs/core": "^2.11.8",
 		"markdown-it": "^14.0.0",
 		"markdown-it-attrs": "^4.1.6",
 		"shell-quote": "^1.8.1",

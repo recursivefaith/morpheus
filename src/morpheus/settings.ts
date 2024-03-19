@@ -1,4 +1,5 @@
 import { App, PluginSettingTab, Setting } from 'obsidian'
+import {FileSuggest} from '../theme/FileSuggester'
 import {MorpheusCore} from '../../main'
 
 
@@ -25,5 +26,19 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
 					this.plugin.settings.geminiAPI = value;
 					await this.plugin.saveSettings();
 				}));
+
+    new Setting(this.containerEl)
+      .setName('Select Configuration File')
+      .setDesc('Choose a file for configuration')
+      .addSearch(searchComponent => {
+        new FileSuggest(this.app, searchComponent.inputEl);
+        searchComponent.setPlaceholder('Type to search for a file...')
+          .setValue(this.plugin.settings.selectedFilePath)
+          .onChange(async (value) => {
+            // The 'value' will be the file path selected by the user from the dropdown
+            this.plugin.settings.selectedFilePath = value;
+            await this.plugin.saveSettings();
+          });
+      });
 	}
 }
