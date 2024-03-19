@@ -145,6 +145,7 @@ export class MatrixTab extends ItemView {
 
     // Create matrix while thinking
     let count = Math.max(3, Math.random()*this.width/2)
+    // @ts-ignore
     if (this.plugin.isThinking && !this.plugin.waitingForFirstChunk && Math.random() > .9) {
       this.createRain({style: 'primary', count: count*1})
       this.createRain({style: 'info', count: count*.25})
@@ -223,6 +224,7 @@ export class MatrixTab extends ItemView {
   onEditorChange (editor: any, info: any) {
     let count = Math.max(3, Math.random()*this.width/30)
     
+    // @ts-ignore
     if (this.plugin.isThinking) {
       this.createRain({style: 'primary', count: count*1})
       this.createRain({style: 'secondary', count: count*.25})

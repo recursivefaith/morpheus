@@ -1,5 +1,4 @@
 import {MorpheusCore} from 'main'
-// import './style.css'
 import 'splitting/dist/splitting.css'
 import 'splitting/dist/splitting-cells.css'
 import Splitting from 'splitting'
@@ -10,11 +9,18 @@ export default class setupTheme {
   
   constructor (plugin: MorpheusCore) {
     this.plugin = plugin
-    this.plugin.registerEvent(
-      this.plugin.app.workspace.on('active-leaf-change', () => {
+
+    const applySplitting = () => {
+      window.setTimeout(() => {
         this.applySplittingToTitle()
-        console.log('apply')
-      })
+      }, 1000/30)
+    }
+    
+    this.plugin.registerEvent(
+      this.plugin.app.workspace.on('active-leaf-change', applySplitting.bind(this))
+    )
+    this.plugin.registerEvent(
+      this.plugin.app.workspace.on('layout-change', applySplitting.bind(this))
     )
   }
 
@@ -22,7 +28,7 @@ export default class setupTheme {
     // @ts-ignore
     const $container = this.plugin.app.workspace?.activeLeaf?.containerEl
     if (!$container) return
-    const $title = $container.querySelector('.inline-title:not(.placeholder)')
+    const $title = $container.querySelector('.inline-title:not(.placeholder):not(.morpheus-title-placeholder)')
     if (!$title) return
 
     // Remove existing observer
@@ -47,13 +53,6 @@ export default class setupTheme {
     this.observer.observe($title, { childList: true, characterData: true, subtree: true })
     $container.querySelector('.morpheus-title-placeholder')
     this.split($title, $placeholder)
-  }
-
-  /**
-   * Setup
-   */
-  setup () {
-    console.log('test')
   }
 
 
