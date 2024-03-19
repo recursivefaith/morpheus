@@ -14,9 +14,10 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
         const responseId = this.createSpaceFor('agent', '')
         
         const message = llm.prepareMessage(rawChat)
-        const chat = await this.model.startChat({
+        const history = await this.getHistory()
+        const chat = this.model.startChat({
           // @todo: 
-          history: [],
+          history,
           generationConfig: {}
         })
 
@@ -24,6 +25,7 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
         this.isThinking = true
         this.waitingForFirstChunk = false
         try {
+          console.log(history, message)
           const result = await chat.sendMessageStream(message.parts)
           let text = ''
           for await (const chunk of result.stream) {

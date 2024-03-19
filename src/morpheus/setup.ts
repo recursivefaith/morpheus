@@ -6,8 +6,20 @@ import {MatrixTab} from '../matrix/viz'
 import {addIcon, WorkspaceLeaf} from 'obsidian'
 
 // Settings
-interface MorpheusSettings {geminiAPI: string}
-const DEFAULT_SETTINGS: MorpheusSettings = {geminiAPI: ''}
+interface MorpheusSettings {
+  geminiAPI: string,
+  systemPrompt: string,
+  skillPrompt: string,
+  planningPrompt: string,
+  skillFolder: string
+}
+const DEFAULT_SETTINGS: MorpheusSettings = {
+  geminiAPI: '',
+  systemPrompt: '',
+  skillPrompt: '',
+  planningPrompt: '',
+  skillFolder: ''
+}
 
 export default function mixinSetup(baseClass: typeof MorpheusCore) {
   return class extends baseClass {

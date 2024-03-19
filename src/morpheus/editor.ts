@@ -1,5 +1,5 @@
 import {MorpheusCore} from "../../main"
-import {MarkdownView, Notice} from 'obsidian'
+import {MarkdownView, Notice, TFile} from 'obsidian'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAttrs from 'markdown-it-attrs'
 import shellParser from 'shell-quote/parse'
@@ -168,6 +168,34 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
   
       // Update the cursor position end of line
       editor.setCursor({line: line + 2, ch: 10})
+    }
+
+    /**
+     * Gets the entire conversation history,
+     * including system prompts and page/graph context
+     * @returns 
+     */
+    async getHistory():Promise<[]> {
+      const fileToRead = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt)
+      const history:any = []
+
+      if (fileToRead instanceof TFile) {
+        try {
+          const fileContents = await this.app.vault.read(fileToRead)
+          history.push({
+            role: 'user',
+            parts: fileContents
+          })
+          history.push({
+            role: 'model',
+            parts: 'confirmed'
+          })          
+        } catch (error) {
+          console.error('Error reading file:', error)
+        }
+      }
+      
+      return history
     }
   }
 }

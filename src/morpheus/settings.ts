@@ -49,10 +49,10 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
       .addSearch(searchComponent => {
         new FileSuggest(this.app, searchComponent.inputEl);
         searchComponent.setPlaceholder('Type to search for a file...')
-          .setValue(this.plugin.settings.systemPrompt)
+          .setValue(this.plugin.settings.skillPrompt)
           .onChange(async (value) => {
             // The 'value' will be the file path selected by the user from the dropdown
-            this.plugin.settings.systemPrompt = value;
+            this.plugin.settings.skillPrompt = value;
             await this.plugin.saveSettings();
           });
       });
@@ -64,10 +64,10 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
       .addSearch(searchComponent => {
         new FileSuggest(this.app, searchComponent.inputEl);
         searchComponent.setPlaceholder('Type to search for a file...')
-          .setValue(this.plugin.settings.systemPrompt)
+          .setValue(this.plugin.settings.planningPrompt)
           .onChange(async (value) => {
             // The 'value' will be the file path selected by the user from the dropdown
-            this.plugin.settings.systemPrompt = value;
+            this.plugin.settings.planningPrompt = value;
             await this.plugin.saveSettings();
           });
       });
@@ -78,10 +78,10 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
       .addSearch(searchComponent => {
         new FolderSuggest(this.app, searchComponent.inputEl);
         searchComponent.setPlaceholder('Type to search for a folder...')
-          .setValue(this.plugin.settings.selectedFolderPath)
+          .setValue(this.plugin.settings.skillFolder)
           .onChange(async (value) => {
             // The 'value' will be the Folder path selected by the user from the dropdown
-            this.plugin.settings.selectedFolderPath = value;
+            this.plugin.settings.skillFolder = value;
             await this.plugin.saveSettings();
           });
       });
