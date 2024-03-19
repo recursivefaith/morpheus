@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "node plugin.config.mjs",
 		"dev": "node plugin.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node publish.config.mjs production",
+		"build": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish",
+    "eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs eject",
+    "build:eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish && node plugin.config.mjs eject",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [],
