@@ -171,14 +171,18 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
     }
 
     /**
-     * Gets the entire conversation history,
+     * Gets the system
      * including system prompts and page/graph context
-     * @returns 
      */
     async getHistory():Promise<[]> {
+      const editor = this.getEditor()
+      if (!editor) return []
+
       const fileToRead = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt)
       const history:any = []
 
+
+      // Load the system prompt
       if (fileToRead instanceof TFile) {
         try {
           const fileContents = await this.app.vault.read(fileToRead)
@@ -193,6 +197,26 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
         } catch (error) {
           console.error('Error reading file:', error)
         }
+      }
+
+      // Load all the content before the top of the active chat
+      const cursor = editor.getCursor()
+      let i = cursor.line
+      for (i; i >= 0; i--) {
+        const line = editor.getLine(i)
+        if (!line.startsWith('>')) {
+          break
+        }
+      }
+      if (cursor.line > 0) {
+        history.push({
+          role: 'user',
+          parts: editor.getRange({line: 0, ch: 0}, {line: i, ch: 0})
+        })
+        history.push({
+          role: 'model',
+          parts: 'confirmed'
+        })
       }
       
       return history

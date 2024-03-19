@@ -9,12 +9,12 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
     async onRibbonMainClick(evt: MouseEvent | null) {
       // If in chat, send to LLM
       if (this.isCursorInChat()) {
+        const history = await this.getHistory()
         const rawChat = this.getActiveChat()
         const chatMeta = this.getChatMetaFromString(rawChat)
         const responseId = this.createSpaceFor('agent', '')
         
         const message = llm.prepareMessage(rawChat)
-        const history = await this.getHistory()
         const chat = this.model.startChat({
           // @todo: 
           history,
@@ -25,7 +25,6 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
         this.isThinking = true
         this.waitingForFirstChunk = false
         try {
-          console.log(history, message)
           const result = await chat.sendMessageStream(message.parts)
           let text = ''
           for await (const chunk of result.stream) {
