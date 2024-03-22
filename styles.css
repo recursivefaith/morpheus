@@ -482,9 +482,6 @@ body h1, body h2, body h3, body h4, body h5, body h6,
 
 
 /* Publish */
-body .site-body-left-column-site-logo img {
-  width: 64px;
-}
 body .site-body-left-column-site-name {
   text-align: center;
   padding-right: 0;

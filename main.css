@@ -78,4 +78,3 @@
     --distance-y: calc( (var(--offset-y) * var(--offset-y)) / var(--center-y) );
   }
 }
-/*# sourceMappingURL=main.css.map */
