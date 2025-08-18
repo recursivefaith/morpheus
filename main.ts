@@ -3,6 +3,7 @@ import {GoogleGenerativeAI, GenerativeModel} from '@google/generative-ai'
 import mixinSetup from 'src/morpheus/setup'
 import mixinRibbon from 'src/morpheus/ribbon'
 import mixinEditor from 'src/morpheus/editor'
+import mixinSkills from 'src/morpheus/skills'
 import MatrixTheme from 'src/theme/setup'
 
 // @see src/morpheus/setup.ts for Theme setup as well

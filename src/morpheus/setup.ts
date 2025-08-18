@@ -24,6 +24,8 @@ const DEFAULT_SETTINGS: MorpheusSettings = {
 export default function mixinSetup(baseClass: typeof MorpheusCore) {
   return class extends baseClass {
     async onload() {
+      (globalThis as any).morpheus = this
+      
       // Register views
       this.registerView('morpheus-matrix', (leaf: WorkspaceLeaf) => new MatrixTab(this, leaf))
       
