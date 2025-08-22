@@ -27,6 +27,7 @@
 	"dependencies": {
 		"@google/generative-ai": "^0.2.0",
 		"@popperjs/core": "^2.11.8",
+		"handsfree": "^8.5.1",
 		"markdown-it": "^14.0.0",
 		"markdown-it-attrs": "^4.1.6",
 		"shell-quote": "^1.8.1",
