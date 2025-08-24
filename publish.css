@@ -252,6 +252,9 @@ blockquote {
   color: var(--background-primary) !important;
   background: none !important;
 }
+.inline-title:not(.morpheus-title-placeholder)::first-letter {
+  opacity: 0;
+}
 .morpheus-title-placeholder {
   position: absolute;
   top: 0;
@@ -265,7 +268,7 @@ blockquote {
   font-family: "HaulageCommercial-Striped";
   font-weight: normal;
   font-size: 3.5rem !important;
-  background: linear-gradient(to bottom, var(---color-text-1-bright) 69%, var(---color-1-bright) 50%);
+  background: linear-gradient(to bottom, var(---color-text-1-bright) 60%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -281,9 +284,12 @@ blockquote {
 .morpheus-title-placeholder > span:first-child:first-letter,
 .morpheus-title-placeholder .char.capital {
   color: var(---color-2);
-  background: linear-gradient(to bottom, var(---color-2) 69%, var(---color-1-bright) 50%);
+  background: linear-gradient(to bottom, var(---color-2) 60%, var(---color-1-bright) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+.cm-em {
+  color: var(---color-1-bright);
 }
 .morpheus-title-placeholder {
   position: absolute;
