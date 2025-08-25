@@ -159,7 +159,7 @@ body.theme-light {
 
 
   /* Scrollbars */
-  --scrollbar-thumb-bg: var(---color-1-light1);
+  --scrollbar-thumb-bg: var(---color-2);
   --scrollbar-active-thumb-bg: var(---color-2);
 
 
