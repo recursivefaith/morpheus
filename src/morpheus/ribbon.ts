@@ -15,21 +15,35 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
         const responseId = this.createSpaceFor('agent', '')
         
         const message = llm.prepareMessage(rawChat)
-        const chat = this.model.startChat({
-          // @todo: 
-          history,
-          generationConfig: {}
-        })
-
-        // Stream results
+        
+        // Build contents array with history + current message
+        const contents = [
+          ...history,
+          {
+            role: "user",
+            parts: [{ text: message }]
+          }
+        ]
+        
+        // Stream results using the new API
         this.isThinking = true
         this.waitingForFirstChunk = false
         try {
-          const result = await chat.sendMessageStream(message.parts)
+          const response = await this.genAI.models.generateContentStream({
+            model: "gemini-2.0-flash",
+            contents: contents,
+            generationConfig: {
+              temperature: 0.7,
+              topP: 0.8,
+              topK: 40,
+              maxOutputTokens: 8192,
+            }
+          })
+          
           let text = ''
-          for await (const chunk of result.stream) {
+          for await (const chunk of response) {
             this.waitingForFirstChunk = true
-            const chunkText = await chunk.text()
+            const chunkText = chunk.text
             text += chunkText
             if (!this.writeAgentChunk(responseId, chunkText)) {
               break
@@ -40,18 +54,15 @@ export default function mixinRibbon(baseClass: typeof MorpheusCore) {
           new Notice(e.toString())
           this.createSpaceFor('error', e.toString())
         }
-
         // Cleanup
         this.removeChatArtifacts(responseId)
         this.isThinking = false
         this.waitingForFirstChunk = true
-
         // if not in chat, create one
       } else {
         this.createSpaceFor('', '')
       }
     }
-
     // Matrix rain tab
     async onRibbonMatrixClick(evt: MouseEvent | null) {
       const leaf = this.app.workspace.getLeaf('split', 'vertical')

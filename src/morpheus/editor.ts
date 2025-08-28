@@ -170,56 +170,55 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
       editor.setCursor({line: line + 2, ch: 10})
     }
 
-    /**
-     * Gets the system
-     * including system prompts and page/graph context
-     */
-    async getHistory():Promise<[]> {
-      const editor = this.getEditor()
-      if (!editor) return []
-
-      const fileToRead = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt)
-      const history:any = []
-
-
-      // Load the system prompt
-      if (fileToRead instanceof TFile) {
-        try {
-          const fileContents = await this.app.vault.read(fileToRead)
-          history.push({
-            role: 'user',
-            parts: fileContents
-          })
-          history.push({
-            role: 'model',
-            parts: 'confirmed'
-          })          
-        } catch (error) {
-          console.error('Error reading file:', error)
-        }
-      }
-
-      // Load all the content before the top of the active chat
-      const cursor = editor.getCursor()
-      let i = cursor.line
-      for (i; i >= 0; i--) {
-        const line = editor.getLine(i)
-        if (!line.startsWith('>')) {
-          break
-        }
-      }
-      if (cursor.line > 0) {
-        history.push({
-          role: 'user',
-          parts: editor.getRange({line: 0, ch: 0}, {line: i, ch: 0})
-        })
-        history.push({
-          role: 'model',
-          parts: 'confirmed'
-        })
-      }
-      
-      return history
+/**
+ * Gets the system
+ * including system prompts and page/graph context
+ */
+async getHistory():Promise<any[]> {
+  const editor = this.getEditor()
+  if (!editor) return []
+  const fileToRead = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt)
+  const history:any = []
+  
+  // Load the system prompt
+  if (fileToRead instanceof TFile) {
+    try {
+      const fileContents = await this.app.vault.read(fileToRead)
+      history.push({
+        role: 'user',
+        parts: [{ text: fileContents }]
+      })
+      history.push({
+        role: 'model',
+        parts: [{ text: 'confirmed' }]
+      })          
+    } catch (error) {
+      console.error('Error reading file:', error)
     }
+  }
+  
+  // Load all the content before the top of the active chat
+  const cursor = editor.getCursor()
+  let i = cursor.line
+  for (i; i >= 0; i--) {
+    const line = editor.getLine(i)
+    if (!line.startsWith('>')) {
+      break
+    }
+  }
+  if (cursor.line > 0) {
+    history.push({
+      role: 'user',
+      parts: [{ text: editor.getRange({line: 0, ch: 0}, {line: i, ch: 0}) }]
+    })
+    history.push({
+      role: 'model',
+      parts: [{ text: 'confirmed' }]
+    })
+  }
+  
+  return history
+}
+
   }
 }
