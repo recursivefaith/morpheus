@@ -8,6 +8,7 @@ import {addIcon, WorkspaceLeaf} from 'obsidian'
 // Settings
 interface MorpheusSettings {
   geminiAPI: string,
+  modelName: string,
   systemPrompt: string,
   skillPrompt: string,
   planningPrompt: string,
@@ -16,6 +17,7 @@ interface MorpheusSettings {
 
 const DEFAULT_SETTINGS: MorpheusSettings = {
   geminiAPI: '',
+  modelName: 'models/gemini-2.5-flash',
   systemPrompt: '',
   skillPrompt: '',
   planningPrompt: '',
@@ -37,7 +39,6 @@ export default function mixinSetup(baseClass: typeof MorpheusCore) {
         apiKey: this.settings.geminiAPI 
       })
       this.theme = new MatrixTheme(this)
-      // Scan for fancy titles
       let hasScanned = false
       this.app.workspace.onLayoutReady(() => {
         !hasScanned && this.theme.applySplittingToAllTitles()
@@ -50,7 +51,6 @@ export default function mixinSetup(baseClass: typeof MorpheusCore) {
     }
     
     async init() {
-      // Main Ribbon Button
       this.addSettingTab(new MorpheusSettingsTab(this.app, this))
       addIcon('morpheusLogo', `<g transform="scale(4.5,4.5)" fill="none" stroke="currentColor">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-message-square"><path d="M12 6V2H8"/><path d="m8 18-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"/><path d="M2 12h2"/><path d="M9 11v2"/><path d="M15 11v2"/><path d="M20 12h2"/></svg>
@@ -63,7 +63,6 @@ export default function mixinSetup(baseClass: typeof MorpheusCore) {
         hotkeys: [{modifiers: ['Mod'], key: 'Enter'}],
         callback: () => this.onRibbonMainClick(null),
       })
-      // Matrix Rain
       const matrixIconEl = this.addRibbonIcon('rabbit', 'Show Matrix Rain', (evt: MouseEvent) => this.onRibbonMatrixClick(evt))
       matrixIconEl.addClass('morpheus')
       this.addCommand({
