@@ -18,6 +18,51 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
       return null
     }
 
+    // Add this method inside the class in morpheus/editor.ts
+    async gatherContextRecursively(
+      filePath: string,
+      maxDepth: number,
+      currentDepth: number,
+      visitedPaths: Map<string, string>
+    ): Promise<void> {
+      // Base case: Stop if max depth is reached or file has been visited
+      if (currentDepth >= maxDepth || visitedPaths.has(filePath)) {
+        return;
+      }
+
+      const file = this.app.vault.getAbstractFileByPath(filePath);
+
+      if (file instanceof TFile && file.extension === 'md') {
+        const content = await this.app.vault.read(file);
+        
+        // Store content to prevent re-processing
+        visitedPaths.set(filePath, content);
+
+        // Regex to find both wikilinks and transclusions
+        const linkRegex = /!?\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
+        let match;
+        const promises = [];
+
+        // Use Promise.all to fetch linked content in parallel
+        while ((match = linkRegex.exec(content)) !== null) {
+          const linkedFileName = match[1];
+          const linkedFile = this.app.metadataCache.getFirstLinkpathDest(linkedFileName, file.path);
+          
+          if (linkedFile) {
+            promises.push(
+              this.gatherContextRecursively(
+                linkedFile.path,
+                maxDepth,
+                currentDepth + 1,
+                visitedPaths
+              )
+            );
+          }
+        }
+        await Promise.all(promises);
+      }
+    }    
+
     // - Checks if inside chat callout like "> [!chat user]" or ">[!chat user]"
     // - If so, checks each line moving upward to see if it starts with
     isCursorInChat(): boolean {
@@ -170,55 +215,79 @@ export default function mixinEditor(baseClass: typeof MorpheusCore) {
       editor.setCursor({line: line + 2, ch: 10})
     }
 
-/**
- * Gets the system
- * including system prompts and page/graph context
- */
-async getHistory():Promise<any[]> {
-  const editor = this.getEditor()
-  if (!editor) return []
-  const fileToRead = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt)
-  const history:any = []
-  
-  // Load the system prompt
-  if (fileToRead instanceof TFile) {
-    try {
-      const fileContents = await this.app.vault.read(fileToRead)
-      history.push({
-        role: 'user',
-        parts: [{ text: fileContents }]
-      })
-      history.push({
-        role: 'model',
-        parts: [{ text: 'confirmed' }]
-      })          
-    } catch (error) {
-      console.error('Error reading file:', error)
+    // Replace the old getHistory with this one in morpheus/editor.ts
+    // In morpheus/editor.ts, this is the final version of the getHistory method
+    async getHistory(): Promise<any[]> {
+        const editor = this.getEditor();
+        if (!editor) return [];
+
+        const history: any[] = [];
+        const MAX_LINK_DEPTH = 2;
+
+        // 1. System prompt (remains first as a general tone-setter)
+        const systemPromptFile = this.app.vault.getAbstractFileByPath(this.settings.systemPrompt);
+        if (systemPromptFile instanceof TFile) {
+            const fileContents = await this.app.vault.read(systemPromptFile);
+            history.push({ role: 'user', parts: [{ text: fileContents }] });
+            history.push({ role: 'model', parts: [{ text: 'confirmed' }] });
+        }
+
+        // 2. Prepare all the user's content
+        const activeFile = this.app.workspace.getActiveFile();
+        let userContent = '';
+
+        if (activeFile && editor) {
+            const visitedPaths = new Map<string, string>();
+            await this.gatherContextRecursively(activeFile.path, MAX_LINK_DEPTH, 0, visitedPaths);
+
+            // A. Format linked context
+            let formattedContext = '';
+            const currentPageContent = visitedPaths.get(activeFile.path) || '';
+            visitedPaths.delete(activeFile.path); 
+
+            for (const [path, content] of visitedPaths.entries()) {
+                const file = this.app.vault.getAbstractFileByPath(path);
+                if(file instanceof TFile) {
+                    formattedContext += `<context title="${file.basename}" path="${path}">\n${content}\n</context>\n\n`;
+                }
+            }
+
+            // B. Inject cursor marker
+            const cursor = editor.getCursor();
+            const lines = currentPageContent.split('\n');
+            lines[cursor.line] = lines[cursor.line].slice(0, cursor.ch) + '<!--CURSOR-->' + lines[cursor.line].slice(cursor.ch);
+            const contentWithCursor = lines.join('\n');
+            
+            // C. Combine all user content together
+            userContent = formattedContext + contentWithCursor;
+        }
+        
+        // 3. Push the user's content first
+        if (userContent.trim()) {
+            history.push({
+                role: 'user',
+                parts: [{ text: userContent }]
+            });
+            history.push({
+                role: 'model',
+                parts: [{ text: 'Acknowledged. I have received the context.' }]
+            });
+        }
+
+        // 4. Push the final instruction LAST
+        const finalInstruction = `
+    IMPORTANT: You are an AI assistant inside the user's personal knowledge graph. Your final instruction is to analyze all the context provided above.
+
+    The user's current note contains a special marker, <!--CURSOR-->. This indicates their current focus. Your primary task is to generate a response that is relevant to the text immediately surrounding that cursor. Use all the preceding text, including other <context> blocks, as the knowledge base to formulate the most helpful and context-aware response possible.
+    `;
+        history.push({
+            role: 'user',
+            parts: [{ text: finalInstruction }]
+        });
+
+        return history;
     }
-  }
-  
-  // Load all the content before the top of the active chat
-  const cursor = editor.getCursor()
-  let i = cursor.line
-  for (i; i >= 0; i--) {
-    const line = editor.getLine(i)
-    if (!line.startsWith('>')) {
-      break
-    }
-  }
-  if (cursor.line > 0) {
-    history.push({
-      role: 'user',
-      parts: [{ text: editor.getRange({line: 0, ch: 0}, {line: i, ch: 0}) }]
-    })
-    history.push({
-      role: 'model',
-      parts: [{ text: 'confirmed' }]
-    })
-  }
-  
-  return history
-}
+
 
   }
 }

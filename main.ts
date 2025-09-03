@@ -32,7 +32,7 @@ export class MorpheusCore extends Plugin {
   createSpaceFor(createFor:string, message:string|''):string {return ''}
   writeAgentChunk(responseId: string, chunkText: string):boolean {return false}
   removeChatArtifacts(responseId: string):void {}
-  getHistory():Promise<[]> {return Promise.resolve([])}
+  getHistory():Promise<any[]> {return Promise.resolve([])}
 }
 
 export default mixinEditor(mixinRibbon(mixinSetup(MorpheusCore)))
