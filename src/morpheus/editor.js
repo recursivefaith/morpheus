@@ -154,7 +154,6 @@ export default function mixinEditor(baseClass) {
     // Search for <span id="${id}">
     // Insert the chunkText before the < (don't replace)
     writeAgentChunk(responseId, chunkText) {
-      console.log('test😅😅😅😅😅😅😅😅😅😅😅😅')
       const editor = this.getEditor();
       if (!editor) return false;
 
