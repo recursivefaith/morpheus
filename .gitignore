@@ -12,9 +12,6 @@ node_modules
 # They should be uploaded to GitHub releases instead.
 main.css
 main.js
-main.js.map
-publish.css
-publish.js
 
 # Exclude sourcemaps
 *.map

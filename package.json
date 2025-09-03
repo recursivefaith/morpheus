@@ -4,25 +4,16 @@
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
 	"scripts": {
-		"start": "node plugin.config.mjs",
-		"dev": "node plugin.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish",
-		"eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs eject",
-		"build:eject": "tsc -noEmit -skipLibCheck && node plugin.config.mjs production && node plugin.config.mjs publish && node plugin.config.mjs eject",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
+    "dev": "node build.js --watch",
+    "build": "node build.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "5.29.0",
-		"@typescript-eslint/parser": "5.29.0",
-		"builtin-modules": "3.3.0",
+		"chokidar": "^4.0.3",
 		"esbuild": "0.17.3",
-		"obsidian": "latest",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
+		"obsidian": "latest"
 	},
 	"dependencies": {
 		"@google/genai": "^1.16.0",
