@@ -1,6 +1,7 @@
 import { Notice } from 'obsidian';
 import { MorpheusCore } from '..';
 import { MatrixTab } from '../matrix/viz';
+import { TtydView } from '../ttyd/TtydView'; 
 import llm from './model/gemini';
 
 export default function mixinRibbon(baseClass) {
@@ -47,10 +48,17 @@ export default function mixinRibbon(baseClass) {
         this.createSpaceFor('', '');
       }
     }
+
     async onRibbonMatrixClick(evt) {
       const leaf = this.app.workspace.getLeaf('split', 'vertical');
       const tab = new MatrixTab(this, leaf);
       leaf.open(tab);
     }
+
+    async onRibbonTtydClick(evt) {
+      const leaf = this.app.workspace.getLeaf('split', 'vertical');
+      const tab = new TtydView(this, leaf);
+      leaf.open(tab);
+    }    
   };
 }

@@ -1,10 +1,14 @@
+// src/morpheus/setup.js
+
 import { MorpheusCore } from '../index.js';
 import { GoogleGenAI } from '@google/genai';
 import MorpheusSettingsTab from './settings.js';
 import MatrixTheme from '../theme/setup.js';
 import { MatrixTab } from '../matrix/viz.js';
+import { TtydView, TTYD_VIEW_TYPE } from '../ttyd/TtydView.js';
 import { addIcon } from 'obsidian';
 
+// 1. Add the new setting with its default value
 const DEFAULT_SETTINGS = {
   geminiAPI: '',
   modelName: 'models/gemini-2.5-flash',
@@ -12,6 +16,7 @@ const DEFAULT_SETTINGS = {
   skillPrompt: '',
   planningPrompt: '',
   skillFolder: '',
+  ttydPort: 7681, // Default TTYD port
 };
 
 export default function mixinSetup(baseClass) {
@@ -19,15 +24,18 @@ export default function mixinSetup(baseClass) {
     async onload() {
       globalThis.morpheus = this;
 
-      // Register views
       this.registerView('morpheus-matrix', (leaf) => new MatrixTab(this, leaf));
+      this.registerView(TTYD_VIEW_TYPE, (leaf) => new TtydView(this, leaf));
 
-      // Setup
       await this.loadSettings();
       await this.init();
-      this.genAI = new GoogleGenAI({
-        apiKey: this.settings.geminiAPI,
-      });
+
+      if (this.settings.geminiAPI) {
+        this.genAI = new GoogleGenAI({
+            apiKey: this.settings.geminiAPI,
+        });
+      }
+      
       this.theme = new MatrixTheme(this);
       let hasScanned = false;
       this.app.workspace.onLayoutReady(() => {
@@ -36,7 +44,6 @@ export default function mixinSetup(baseClass) {
       });
     }
 
-    // @todo
     onunload() {
       this.theme.unload();
     }
@@ -61,6 +68,23 @@ export default function mixinSetup(baseClass) {
         hotkeys: [{ modifiers: ['Mod'], key: 'Enter' }],
         callback: () => this.onRibbonMainClick(null),
       });
+
+      addIcon(
+        'morpheusTerminal',
+        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal-square"><path d="M4 20h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z"/><path d="m7 11 2 2-2 2"/><path d="M11 15h4"/></svg>`
+      );
+      const ttydIconEl = this.addRibbonIcon(
+        'morpheusTerminal',
+        'Open TTYD Terminal',
+        (evt) => this.onRibbonTtydClick(evt)
+      );
+      ttydIconEl.addClass('morpheus');
+      this.addCommand({
+        id: 'morpheus-open-ttyd',
+        name: 'Open TTYD Terminal',
+        callback: () => this.onRibbonTtydClick(null),
+      });
+
       const matrixIconEl = this.addRibbonIcon(
         'rabbit',
         'Show Matrix Rain',
@@ -74,11 +98,14 @@ export default function mixinSetup(baseClass) {
         callback: () => this.onRibbonMatrixClick(null),
       });
     }
+
     async loadSettings() {
       this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
     }
+    
     async saveSettings() {
       await this.saveData(this.settings);
     }
   };
 }
+

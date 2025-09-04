@@ -12,6 +12,7 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
+
     new Setting(containerEl)
       .setName('🔑 Google Gemini API key')
       .setDesc('Grab one at: https://makersuite.google.com/app/apikey')
@@ -96,5 +97,18 @@ export default class MorpheusSettingsTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           });
       });
+
+    new Setting(containerEl)
+      .setName('🔌 TTYD Port')
+      .setDesc('The port number where your ttyd server is running.')
+      .addText((text) =>
+        text
+          .setPlaceholder('7681')
+          .setValue(this.plugin.settings.ttydPort)
+          .onChange(async (value) => {
+            this.plugin.settings.ttydPort = value;
+            await this.plugin.saveSettings();
+          })
+      );
   }
 }
