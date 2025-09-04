@@ -1,7 +1,6 @@
 // Credits go to Liam's Periodic Notes Plugin: [https://github.com/liamcain/obsidian-periodic-notes](https://github.com/liamcain/obsidian-periodic-notes)
-
 import { createPopper } from '@popperjs/core';
-import { App, TAbstractFile, TFile } from 'obsidian';
+import { App, TAbstractFile, TFile, Scope } from 'obsidian'; // <-- Import Scope here
 
 export const wrapAround = (value, size) => {
   return ((value % size) + size) % size;
@@ -161,11 +160,12 @@ export class TextInputSuggest {
     this.app.keymap.popScope(this.scope);
 
     this.suggest.setSuggestions([]);
-    this.popper.destroy();
+    if (this.popper) {
+      this.popper.destroy();
+    }
     this.suggestEl.detach();
   }
 }
-
 export class FileSuggest extends TextInputSuggest {
   getSuggestions(inputStr) {
     const abstractFiles = this.app.vault.getAllLoadedFiles();

@@ -29,6 +29,12 @@ export class MorpheusCore extends Plugin {
       resolve();
     });
   }
+  onRibbonTtydClick(evt) {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+
 
   // Editor
   onSubmitChat() {}
