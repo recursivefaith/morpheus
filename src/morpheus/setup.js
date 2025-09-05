@@ -42,6 +42,28 @@ export default function mixinSetup(baseClass) {
         !hasScanned && this.theme.applySplittingToAllTitles();
         hasScanned = true;
       });
+
+      this.registerMarkdownCodeBlockProcessor('js', (source, el, ctx) => {
+        try {
+          // 'source' is the raw text from the code block.
+          // 'el' is the HTML element Obsidian provides for your output.
+          // We execute the code.
+          new Function('app', 'morpheus', source)(this.app, this);
+
+          // We add a confirmation message inside the provided element.
+          el.createEl('div', { 
+            text: '✅ JS code executed successfully.',
+            cls: 'morpheus-success-message' 
+          });
+
+        } catch (e) {
+          console.error("Morpheus js block error:", e);
+          // If there is an error, we display it clearly.
+          el.createEl('pre', { 
+            text: `❌ Error executing script:\n${e.message}` 
+          });
+        }
+      });      
     }
 
     onunload() {
@@ -71,7 +93,8 @@ export default function mixinSetup(baseClass) {
 
       addIcon(
         'morpheusTerminal',
-        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal-icon lucide-terminal"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg>`
+        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-terminal-square">
+        <path d="M4 20h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z"/><path d="m7 11 2 2-2 2"/><path d="M11 15h4"/></svg>`
       );
       const ttydIconEl = this.addRibbonIcon(
         'morpheusTerminal',
